@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				How to Separate UITableView Datasource and Delegate &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-05-18 11:46:16 &#43;0200 SAST">May 18, 2019</time>
+</div>
+		<h1 class="post-title">How to Separate UITableView Datasource and Delegate</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p><img src="/separate-delegate-datasource/feature.png" alt="Separate UITableViewDelegate and UITableViewDatasource" /></p>
+
+<p>Today I will show you how to the put a UITableViewDelegate and UITableViewDatasource into different files. One of the main reasons for doing this is to get the all the code out of the view controller. This cleans up the view controller as the view controller does not need to know about the datasource and delegate methods.</p>
+
+<p>You could take this further by allowing multiple UITableViews to make use of this datasource and delegate, but we will not be getting into that in this tutorial.</p>
+
+<p><br/></p>
+
+<h2 id="what-is-a-uitableviewdatasource-delegate">What is a UITableViewDatasource/Delegate?</h2>
+
+<h3 id="uitableviewdatasource">UITableViewDatasource</h3>
+
+<p>The <code>UITableViewDatasource</code> has a few methods that help you manage data and provide the cells for your table view. The general methods that gets used from the datasource in most tutorials would include the <code>numberOfRowsInSection</code> and the <code>cellForRowAt indexPath</code>. You are required to implement both of these methods in order to conform to the <code>datasource</code> protocol. There are other methods but they are optional with regards to needing to be implemented.</p>
+
+<p>The <code>numberOfRowsInSection</code> method does exactly what it says and returns the number of rows for each section in the <code>table view</code>. In most tutorials only one section is used so this can be as simple as <code>return todoListItems.count</code>, assuming that the <code>todoListItems</code> is either an array or dictionary.</p>
+
+<p>The <code>cellForRowAt indexPath</code> method provides the correct <code>UITableViewCell</code> for a row in the <code>table view</code>.</p>
+
+<p>You will need to use the <code>datasource</code> methods to manage and display the data you want to display in the table view. To do this you need to get the correct data for the cell that you are busy setting up. The <code>datasource</code> is generally an <code>array</code> and you would use the <code>row</code> property that is accessible through the <code>indexPath</code> argument.</p>
+
+<h3 id="uitableviewdelegate">UITableViewDelegate</h3>
+
+<p>A <code>UITableViewDelegate</code> doesn&rsquo;t really need to be implemented, but it will depend on how you want your <code>table view</code> to react to input from the user.</p>
+
+<p>All the methods in the <code>UITableViewDelegate</code> protocol are optional, so you don&rsquo;t need to implement any of them.</p>
+
+<p>The <code>delegate</code> contains lifecycle methods as well was visual methods which allows you to control the height of cells and sections, but it also allows you to control what happens when a user taps on a cell. There are other methods but I won&rsquo;t be going into that much detail about those in this article. But the <a href="https://developer.apple.com/documentation/uikit/uitableviewdelegate" target="_blank">Apple documentation</a> sums it up quite well.</p>
+
+<blockquote>
+<p>Methods for managing selections, configuring section headers and footers, deleting and reordering cells, and performing other actions in a table view.</p>
+</blockquote>
+
+<p><br/></p>
+
+<h2 id="separating-uitableviewdatasource-delegate">Separating UITableViewDatasource/Delegate</h2>
+
+<p>When you separate the <code>datasource</code> and the <code>delegate</code> you need to think about what these two classes are going to need.</p>
+
+<p>Do they need access to the original view controller? How will the <code>datasource</code> access the data that it requires? These questions(there are more questions you need to ask but it really depends on the application that you are building.) will let you know what each class requires.</p>
+
+<p>When I was working on this example that I use in the tutorial, those were the two questions that I asked myself. The answer was quite simple. The <code>delegate</code> would require a <code>delegate</code> property that it would be initiazed with, and the <code>datasource</code> would require the data to be passed through when it was being initialized.</p>
+
+<p>With regards to the <code>datasource</code>, this could be the place where you make network calls to get your data etc. But again, based on the answer of that you would need to ask other questions.</p>
+
+<p>Anyway, lets gets started on implementing these three classes. I will create the base classes first and then after that I will add the content to each of these classes.</p>
+
+<h3 id="step-1-setting-up-the-viewcontroller-swift">Step 1: Setting up the ViewController.swift</h3>
+
+<p>This is my only <code>viewcontroller</code>. In this <code>viewcontroller</code> I have one <code>outlet</code>, this <code>outlet</code> is used for the table view.</p>
+
+<p>This is what my <code>ViewController.swift</code> looks like.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewController</span>: UIViewController {
+    
+    <span style="color:#66d9ef">@IBOutlet</span> <span style="color:#66d9ef">weak</span> <span style="color:#66d9ef">var</span> tableView: UITableView<span style="color:#f92672">!</span>
+    
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">viewDidLoad</span>() {
+        <span style="color:#66d9ef">super</span>.viewDidLoad()
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<h3 id="step-2-create-the-tableviewdelegate-swift-file">Step 2: Create the TableViewDelegate.swift file</h3>
+
+<p>For this step you will need to create a new file called <code>TableViewDelegate.swift</code>. After creating the file you need to create a new class called <code>TableViewDelegate</code> and make it a subclass of <code>NSObject</code> as well as make it conform to <code>UITableViewDelegate</code>.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TableViewDelegate</span>: NSObject, UITableViewDelegate {
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">tableView</span>(<span style="color:#66d9ef">_</span> tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        <span style="color:#75715e">// Code here</span>
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<h3 id="step-3-create-the-tableviewdatasource-swift-file">Step 3: Create the TableViewDatasource.swift file</h3>
+
+<p>The first thing you need to do is to create a new file called <code>TableViewDatasource.swift</code>.</p>
+
+<p>Once you have created the new file you need to create the new class.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TableViewDataSource</span>: NSObject, UITableViewDataSource {
+    <span style="color:#66d9ef">var</span> data = [String]()
+    
+    <span style="color:#66d9ef">init</span>(withData data: [String]) {
+        <span style="color:#66d9ef">self</span>.data = data
+    }
+    
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">tableView</span>(<span style="color:#66d9ef">_</span> tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int {
+        <span style="color:#75715e">// </span>
+    }
+    
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">tableView</span>(<span style="color:#66d9ef">_</span> tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell {
+        <span style="color:#66d9ef">return</span> UITableViewCell()
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>The <code>datasource</code> as explained before has two methods that are required for you to implement. These methods will be updated later in this tutorial.</p>
+
+<h3 id="step-4-create-the-delegate-protocol-viewcontrollerdelegate">Step 4: Create the delegate protocol, ViewControllerDelegate</h3>
+
+<p>Before we carry on we need to create the <code>protocol</code> that we will use to communicate between the <code>TableViewDelegate</code> and the <code>ViewController</code> classes.</p>
+
+<p>The <code>protocol</code> looks like this:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">protocol</span> <span style="color:#a6e22e">ViewControllerDelegate</span>: <span style="color:#66d9ef">class</span> {
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">selectedCell</span>(row: Int)
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>The <code>selectedCell</code> method will allow us to tell the <code>ViewController</code> what cell the user has tapped.</p>
+
+<h3 id="step-5-update-tableviewdelegate-swift">Step 5: Update TableViewDelegate.swift</h3>
+
+<p>Now that we have everything setup we can start adding all the functionality to the classes we have created. We will start with the <code>TableViewDelegate</code> class.</p>
+
+<p>Previously in this tutorial I mentioned that you need to think about what your <code>delegate</code> and <code>datasource</code> will need. For this tutorial I decided that my <code>delegate</code> class would need a <code>delegate</code> property. This <code>delegate</code> property would be used to tell the main view controller when a cell has been tapped.</p>
+
+<p>So let&rsquo;s see how the code looks. Below I show the final version of the <code>TableViewDelegate.swift</code> file.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TableViewDelegate</span>: NSObject, UITableViewDelegate {
+    <span style="color:#75715e">// #1</span>
+    <span style="color:#66d9ef">weak</span> <span style="color:#66d9ef">var</span> delegate: ViewControllerDelegate?
+    
+    <span style="color:#75715e">// #2</span>
+    <span style="color:#66d9ef">init</span>(withDelegate delegate: ViewControllerDelegate) {
+        <span style="color:#66d9ef">self</span>.delegate = delegate
+    }
+    
+    <span style="color:#75715e">// #3</span>
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">tableView</span>(<span style="color:#66d9ef">_</span> tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        <span style="color:#66d9ef">self</span>.delegate?.selectedCell(row: indexPath.row)
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>Now that we have the full implementation of the <code>TableViewDelegate</code> I can explain how it works.</p>
+
+<p>The first thing that I have done is create a <code>delegate</code> <code>property</code>. This will allow us to notify the <code>ViewController</code> when the user has tapped a cell.</p>
+
+<p>Next I create a custom <code>initializer</code> which takes the <code>delegate</code> as an <code>argument</code> and assigns it to the <code>delegate</code> <code>property</code>, so that we can use it later.</p>
+
+<p>The last thing that needs to be done is to implement the <code>didSelectRowAt indexPath</code> method. This method is an optional method of the <code>UITableViewDelegate</code> <code>protocol</code>. All methods in the <code>UITableViewDelegate</code> <code>protocol</code> as optional. In the implementation we call the <code>selectedCell</code> method when we tap the cell. When the user taps the cell it will pass the <code>indexPath.row</code> as an argument to the <code>selectedCell</code> method. The implementation of the <code>selectedCell</code> method will be done in the <code>ViewController</code>.</p>
+
+<h3 id="step-6-implementing-the-tableviewdatasource-swift">Step 6: Implementing the TableViewDatasource.swift</h3>
+
+<p>This is the most important part of this tutorial as the <code>TableViewDatasource</code> controls the cells that show up in the <code>tableview</code>.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TableViewDataSource</span>: NSObject, UITableViewDataSource {
+    <span style="color:#66d9ef">var</span> data = [String]()
+    
+    <span style="color:#66d9ef">init</span>(withData data: [String]) {
+        <span style="color:#66d9ef">self</span>.data = data
+    }
+    
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">tableView</span>(<span style="color:#66d9ef">_</span> tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">self</span>.data.count
+    }
+    
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">tableView</span>(<span style="color:#66d9ef">_</span> tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell {
+        <span style="color:#66d9ef">let</span> cell = UITableViewCell()
+        cell.textLabel?.text = <span style="color:#66d9ef">self</span>.data[indexPath.row]
+        
+        <span style="color:#66d9ef">return</span> cell
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>In the <code>datasource</code> I have a <code>data</code> property that will hold an <code>array</code> of <code>strings</code> that will be displayed in the <code>tableview</code>.</p>
+
+<p>The <code>initializer</code> takes assigns the data from its the value that gets passed in to the <code>data</code> <code>property</code>.</p>
+
+<p>The next two methods control what gets shown on the <code>tableview</code> and what gets shown on each <code>cell</code>. In the <code>numberOfRowsInSection</code> we return the number of items that we have in our <code>data</code> <code>property</code>.</p>
+
+<p>In the <code>cellForRowAt indexPath</code> method we create a new <code>cell</code>. In this method we use the <code>indexPath.row</code> to get the correct string from the <code>data</code> <code>property</code> and we assign that string to the cell&rsquo;s <code>textLabel</code> text property. Once that has been set we will return the <code>cell</code> which in turn will show it on the <code>tableView</code>.</p>
+
+<h3 id="step-7-implementing-the-viewcontroller">Step 7: Implementing the ViewController</h3>
+
+<p>All we need to do now is finish off the <code>ViewController</code>. In the <code>ViewController</code> we will create a new instance of <code>TableViewDelegate</code> and <code>TableViewDatasource</code> and assign those instances to properties on the <code>ViewController</code>. Once we have created these instances we will assign those instances to the <code>delegate</code> and <code>datasource</code> properties on the <code>tableView</code> that we have.</p>
+
+<p>We will also make the <code>ViewController</code> conform to the <code>ViewControllerDelegate</code> protocol. In order to conform to this protocol we will be implementing the <code>selectedCell</code> method that will just print the <code>indexPath.row</code> value of the cell that the user tapped.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewController</span>: UIViewController, ViewControllerDelegate {
+    
+    <span style="color:#66d9ef">var</span> tableViewDatasource: TableViewDataSource?
+    <span style="color:#66d9ef">var</span> tableViewDelegate: TableViewDelegate?
+    
+    <span style="color:#66d9ef">@IBOutlet</span> <span style="color:#66d9ef">weak</span> <span style="color:#66d9ef">var</span> tableView: UITableView<span style="color:#f92672">!</span>
+    
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">viewDidLoad</span>() {
+        <span style="color:#66d9ef">super</span>.viewDidLoad()
+        
+        <span style="color:#66d9ef">self</span>.tableViewDelegate = TableViewDelegate(withDelegate: <span style="color:#66d9ef">self</span>)
+        <span style="color:#66d9ef">self</span>.tableViewDatasource = TableViewDataSource(withData: [<span style="color:#e6db74">&#34;Item 1&#34;</span>, <span style="color:#e6db74">&#34;Item 2&#34;</span>, <span style="color:#e6db74">&#34;Item 3&#34;</span>, <span style="color:#e6db74">&#34;Item 4&#34;</span>, <span style="color:#e6db74">&#34;Item 5&#34;</span>])
+        
+        <span style="color:#66d9ef">self</span>.tableView.delegate = <span style="color:#66d9ef">self</span>.tableViewDelegate
+        <span style="color:#66d9ef">self</span>.tableView.dataSource = <span style="color:#66d9ef">self</span>.tableViewDatasource
+    }
+    
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">selectedCell</span>(row: Int) {
+        print(<span style="color:#e6db74">&#34;Row: </span><span style="color:#e6db74">\(</span>row<span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span>)
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>Once you have implemented this you should be able to run the project and tap on a cell and have the <code>indexPath.row</code> value get printed in Xcode&rsquo;s console.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Separating the <code>delegate</code> and the <code>datasource</code> is good practice in my opinion. Separating this logic into different classes allows the <code>ViewController</code> to do as little as possible and stay focussed on only the things that it needs to worry about.</p>
+
+<p>This can be taken further too. You could have these <code>delegate</code> and <code>datasource</code> classes do other things that relate to their function. One just has to take a look and see what each class could be doing and then decide if they should do it.</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/simulate-location-with-xcode/" class="left arrow">&#8592;</a>
+		<a href="/posts/difference-between-methods-and-functions-in-swift/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

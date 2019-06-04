@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				Add Core Data to Existing iOS Project &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-05-08 15:55:49 &#43;0200 SAST">May 8, 2019</time>
+</div>
+		<h1 class="post-title">Add Core Data to Existing iOS Project</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p><img src="/add-core-data/feature.png" alt="Featured image" /></p>
+
+<p>If you have ever struggled to add Core Data to an existing iOS project, I feel your pain. Years ago when I tried to do it I failed and decided to recreated the project from scratch.</p>
+
+<p>But recently I decided that I should try and add Core Data into an existing project. It turns out that it is actually quite a simple task.</p>
+
+<p>There are a few things that are required when adding Core Data to an existing iOS project. The main part being that if you did not check the “Use Core Data” checkbox when you created your project, then you won’t even have the data model file, which is a bit of an issue. The other issue is that you don’t have the correct code in your AppDelegate file.</p>
+
+<p>So in this tutorial I am going to show you how you can easily add these two requirements to your project so that you can use Core Data.</p>
+
+<p>If you don’t want to read the article, you can always watch the video version:</p>
+
+<iframe 
+width="800" 
+height="450" 
+src="https://www.youtube.com/embed/9fKcNpOiMFY" 
+frameborder="0" 
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen>
+</iframe>
+
+<h2 id="step-1-adding-the-data-model-file">Step 1: Adding the data model file</h2>
+
+<p>The first that you need to do is to add the data model file. To do this you will add a file to your project in the normal way.</p>
+
+<p>Like this:</p>
+
+<p><img src="/add-core-data/new-file.png" alt="Create new file" /></p>
+
+<p>Now you need to select the correct file. To find the data model file you will need to scroll down a bit until you see the heading “Core Data”.</p>
+
+<p>It should look something like this:</p>
+
+<p><img src="/add-core-data/file-type.png" alt="Create new file" /></p>
+
+<h2 id="step-2">Step 2</h2>
+
+<p>Once you have added you data model file you need to update your AppDelegate file.</p>
+
+<p>Like I mentioned previously, when you check that checkbox when starting a new iOS project, it will add all these things, and this is the code that it adds to your AppDelegate file.</p>
+
+<p>The first thing you need to do is to add the following code at the top of your file by all the other imports you have.</p>
+
+<p><code>import CoreData</code></p>
+
+<p>Once you have done that you will be able to add the next part of the code.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">lazy</span> <span style="color:#66d9ef">var</span> persistentContainer: NSPersistentContainer = {
+        <span style="color:#75715e">/*
+</span><span style="color:#75715e">         The persistent container for the application. This implementation
+</span><span style="color:#75715e">         creates and returns a container, having loaded the store for the
+</span><span style="color:#75715e">         application to it. This property is optional since there are legitimate
+</span><span style="color:#75715e">         error conditions that could cause the creation of the store to fail.
+</span><span style="color:#75715e">         */</span>
+        <span style="color:#66d9ef">let</span> container = NSPersistentContainer(name: {YOU NEED TO CHANGE THIS})
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) <span style="color:#66d9ef">in</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> error = error <span style="color:#66d9ef">as</span> NSError? {
+                <span style="color:#75715e">// Replace this implementation with code to handle the error appropriately.</span>
+                <span style="color:#75715e">// fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.</span>
+                
+                <span style="color:#75715e">/*
+</span><span style="color:#75715e">                 Typical reasons for an error here include:
+</span><span style="color:#75715e">                 * The parent directory does not exist, cannot be created, or disallows writing.
+</span><span style="color:#75715e">                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
+</span><span style="color:#75715e">                 * The device is out of space.
+</span><span style="color:#75715e">                 * The store could not be migrated to the current model version.
+</span><span style="color:#75715e">                 Check the error message to determine what the actual problem was.
+</span><span style="color:#75715e">                 */</span>
+                fatalError(<span style="color:#e6db74">&#34;Unresolved error </span><span style="color:#e6db74">\(</span>error<span style="color:#e6db74">)</span><span style="color:#e6db74">, </span><span style="color:#e6db74">\(</span>error.userInfo<span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span>)
+            }
+        })
+        <span style="color:#66d9ef">return</span> container
+    }()
+    
+    <span style="color:#75715e">// </span><span style="color:#75715e">MARK:</span><span style="color:#75715e"> - Core Data Saving support</span>
+    
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">saveContext</span> () {
+        <span style="color:#66d9ef">let</span> context = persistentContainer.viewContext
+        <span style="color:#66d9ef">if</span> context.hasChanges {
+            <span style="color:#66d9ef">do</span> {
+                <span style="color:#66d9ef">try</span> context.save()
+            } <span style="color:#66d9ef">catch</span> {
+                <span style="color:#75715e">// Replace this implementation with code to handle the error appropriately.</span>
+                <span style="color:#75715e">// fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.</span>
+                <span style="color:#66d9ef">let</span> nserror = error <span style="color:#66d9ef">as</span> NSError
+                fatalError(<span style="color:#e6db74">&#34;Unresolved error </span><span style="color:#e6db74">\(</span>nserror<span style="color:#e6db74">)</span><span style="color:#e6db74">, </span><span style="color:#e6db74">\(</span>nserror.userInfo<span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span>)
+            }
+        }
+    }</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>When you add that code to your project it will not run. I have added a line of text that will not compile. You need to replace <code>{YOU NEED TO CHANGE THIS}</code> to be a string that is the same name as your data model file.</p>
+
+<p>Something like the below:</p>
+
+<p><code>let container = NSPersistentContainer(name: &quot;TestModel&quot;)</code></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That should be it, you should now be able to use Core Data in your project. If you want to see me test the code you can watch the video that I have included at the top of the post.</p>
+
+<p>If you found this post or my video tutorial useful, please share and subscribe to my YouTube channel, it is much appreciated :)</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/easily-fix-build-only-device-cannot-be-used-to-run-this-project/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

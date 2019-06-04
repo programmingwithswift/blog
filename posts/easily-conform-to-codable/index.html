@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				Easily Conform to Codable &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-05-28 19:18:36 &#43;0200 SAST">May 28, 2019</time>
+</div>
+		<h1 class="post-title">Easily Conform to Codable</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p>Today I will show you how to fix <code>Type does not conform to protocol 'Decodable'</code>. The fix is not difficult but it can be annoying that one needs to write wrappers for the types that do not conform.</p>
+
+<p>Lets get started. The below code is my broken example.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">User</span>: Codable {
+    <span style="color:#66d9ef">let</span> name: String
+    <span style="color:#66d9ef">let</span> email: String
+    <span style="color:#66d9ef">let</span> profilePicture: UIImage
+    <span style="color:#66d9ef">let</span> location: CLLocationCoordinate2D
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>The problem with the above code is that both <code>UIImage</code> and <code>CLLocationCoordinate2D</code> do not conform to <code>Decodable</code>. The fix is straight forward but it is significantly more code than the default <code>struct</code> from above.</p>
+
+<p>Before we fix the above issue, one needs to take a look at the type that you are trying to create a wrapper for. In this case we are trying to make <code>UIImage</code> codable as well as <code>CLLocationCoordinate2D</code>.</p>
+
+<p>For <code>UIImage</code> we can use the <code>Data</code> type in Swift. <code>Data</code> is codable therefore we can use it in our wrapper. With <code>CLLocationCoordinate2D</code> the latitude and longitude is of type <code>Double</code>, <code>Double</code> is also a codable type.</p>
+
+<p>So when you are going to write a wrapper try and find a codable representation of whatever type is causing the issue. <code>UIColor</code> for example uses <code>CGFloat</code> to represent the red, green, blue and alpha channels. <code>CGFloat</code> is codeable so one would need to use that.</p>
+
+<p>Ok, lets start fixing this problem.</p>
+
+<p>First we will fix the <code>profilePicture</code> property. To that we need to create a new struct. Like I said we need to represent an image as <code>Data</code>.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Image</span>: Codable{
+    <span style="color:#66d9ef">let</span> imageData: Data?
+    
+    <span style="color:#66d9ef">init</span>(withImage image: UIImage) {
+        <span style="color:#66d9ef">self</span>.imageData = image.pngData()
+    }
+
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getImage</span>() -&gt; UIImage? {
+        <span style="color:#66d9ef">guard</span> <span style="color:#66d9ef">let</span> imageData = <span style="color:#66d9ef">self</span>.imageData <span style="color:#66d9ef">else</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+        }
+        <span style="color:#66d9ef">let</span> image = UIImage(data: imageData)
+        
+        <span style="color:#66d9ef">return</span> image
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>The <code>Image</code> struct is now codable. To do this I created an <code>imageData</code> property of type <code>Data</code>. This is required as we can only use a codable type for the property otherwise we will be stuck in the same situation we had before.</p>
+
+<p>The next thing I done was create a custom initializer. This allows us to initialize the struct with a <code>UIImage</code>. We then use that <code>UIImage</code> and call the <code>pngData()</code> method. The <code>pngData()</code> method has a return type of <code>Data?</code>, this works perfectly for our situation.</p>
+
+<p>Now the issue is that we want to get a <code>UIImage</code> from this struct, we don&rsquo;t always want to convert it ourselves. For this I created a simple get method that will return an optional <code>UIImage</code>. This is required as the argument type is <code>Data</code>, <code>Data</code> could mean anything, it could even be text, so initializing a <code>UIImage</code> with data return an optional <code>UIImage</code>.</p>
+
+<p>Now we will either return nil or the image.</p>
+
+<p>We can now change the <code>profilePicture</code> property to be of type <code>Image</code>, as below.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">User</span>: Codable {
+    <span style="color:#66d9ef">let</span> name: String
+    <span style="color:#66d9ef">let</span> email: String
+    <span style="color:#66d9ef">let</span> profilePicture: Image
+    <span style="color:#66d9ef">let</span> location: CLLocationCoordinate2D
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>Awesome, now that that one is sorted lets move onto the <code>location</code> property.</p>
+
+<p>We need to create a new <code>Coordinate</code> type. This will have two properties, <code>latitude</code> and <code>longitude</code> and they will be of type <code>Double</code>. This works for us as <code>Double</code> is codable.</p>
+
+<p>In the same way we created a getter in the <code>Image</code> type, we have a similar method that will create and return a new <code>CLLocationCoordinate2D</code> based on the two properties.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Coordinate</span>: Codable {
+    <span style="color:#66d9ef">let</span> latitude: Double
+    <span style="color:#66d9ef">let</span> longitude: Double
+
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">locationCoordinate</span>() -&gt; CLLocationCoordinate2D {
+        <span style="color:#66d9ef">return</span> CLLocationCoordinate2D(latitude: <span style="color:#66d9ef">self</span>.latitude,
+                                      longitude: <span style="color:#66d9ef">self</span>.longitude)
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>And it is as simple as that. We now have a codable <code>Coordinate</code>.</p>
+
+<p>We can update the <code>location</code> property in the <code>User</code> type now to look like the below.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">User</span>: Codable {
+    <span style="color:#66d9ef">let</span> name: String
+    <span style="color:#66d9ef">let</span> email: String
+    <span style="color:#66d9ef">let</span> profilePicture: Image
+    <span style="color:#66d9ef">let</span> location: Coordinate
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That&rsquo;s it, the <code>User</code> type is now codable and there are no more errors. I hope this has helped.</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/hashvalue-deprecated-as-protocol-requirement/" class="left arrow">&#8592;</a>
+		<a href="/posts/swift-singleton-example/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

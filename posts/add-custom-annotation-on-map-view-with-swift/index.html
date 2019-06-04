@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				Add MKPointAnnotation on Map View With Swift &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-05-25 15:10:45 &#43;0200 SAST">May 25, 2019</time>
+</div>
+		<h1 class="post-title">Add MKPointAnnotation on Map View With Swift</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p>Adding a MKPointAnnotation on a map with Swift is quite simple and in this tutorial I will show you how to add a annotaiton to a MKMapView with Swift.</p>
+
+<p>For this tutorial I will assume that you have already setup your map view. If you haven&rsquo;t I have another tutorial, Getting started with MKMapView, that will help you to get started with MKMapView.</p>
+
+<p>Ok, lets get started.</p>
+
+<h2 id="step-1-creating-the-annotation">Step 1: Creating the annotation</h2>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">// Create MKPointaAnnotation</span>
+<span style="color:#66d9ef">let</span> annotation = MKPointAnnotation()
+annotation.title = <span style="color:#e6db74">&#34;London&#34;</span>
+annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(<span style="color:#ae81ff">51.5074</span>),
+                                                longitude: CLLocationDegrees(<span style="color:#ae81ff">0.1278</span>))</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>The above code is pretty self explanatory. We create a new instance of MKPointAnnotation, after that we set the title property to <code>London</code> and then we create a new instance of <code>CLLocationCoordinate2D</code> with the latitude and longitude of <code>London</code>.</p>
+
+<h2 id="step-2-adding-a-mkpointannotation-to-an-mkmapview">Step 2: Adding a MKPointAnnotation to an MKMapView</h2>
+
+<p>This is even easier than the previous step. The map view has a method called <code>addAnnotation</code>, we will use this to add the annotation we have created.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">// Add annotation to mapView</span>
+<span style="color:#66d9ef">self</span>.mapView.addAnnotation(annotation)</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>And you are done! If you want to add multiple MKPointAnnotations&rsquo; there is another method called <code>addAnnotations</code>. This will take an array of MKPointAnnotations&rsquo;.</p>
+
+<p>In the below example just assume that I have created two instances of MKPointAnnotations called <code>londonAnnotation</code> and <code>newYorkCityAnnotation</code>, in the same way that we created it before.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">// Add multiple annotations. </span>
+<span style="color:#66d9ef">let</span> annotations = [londonAnnotation, newYorkCityAnnotation]
+<span style="color:#66d9ef">self</span>.mapView.addAnnotations(annotations)</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>That is how simple it is to add single or multiple annotations to a MKMapView.</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/difference-between-methods-and-functions-in-swift/" class="left arrow">&#8592;</a>
+		<a href="/posts/how-to-use-userdefaults-suites-with-swift/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

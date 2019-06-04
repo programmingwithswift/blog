@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				Setup Charles for iPhone &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-05-26 16:09:56 &#43;0200 SAST">May 26, 2019</time>
+</div>
+		<h1 class="post-title">Setup Charles for iPhone</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p>In this tutorial I will show you how to setup Charles with your iPhone. Charles is an extremely useful tool. I have used it often to debug my network calls, or to change the value that the server has returned to ensure that my app is behaving correctly.</p>
+
+<h2 id="step-1-get-the-proxy-details">Step 1: Get the proxy details</h2>
+
+<p>The first thing that you need to do once you have Charles open is to navigate to:</p>
+
+<p><code>Help</code> -&gt; <code>SSL Proxying</code> -&gt; <code>Install Charles Root Certificate on a Mobile Device or Remote Browser</code></p>
+
+<p><img src="/setup-charles-proxy/nav-to-ip.png" alt="Navigate to Charles ip address" /></p>
+
+<p>When you do that you should see a window similar to this:</p>
+
+<p><img src="/setup-charles-proxy/charles-ip.png" alt="IP Window" /></p>
+
+<h2 id="step-2-setting-up-your-device">Step 2: Setting up your device</h2>
+
+<h3 id="1-go-to-settings-wi-fi">1. Go to Settings -&gt; Wi-Fi:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-1.jpg" alt="Setup process 1" /></p>
+
+<p><br/></p>
+
+<h3 id="2-select-your-wi-fi-connection">2. Select your Wi-Fi connection:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-2.jpg" alt="Setup process 2" /></p>
+
+<p><br/></p>
+
+<h3 id="3-scroll-all-the-way-to-the-bottom-and-click-on-configure-proxy">3. Scroll all the way to the bottom and click on <code>Configure Proxy</code>:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-3.jpg" alt="Setup process 3" /></p>
+
+<p><br/></p>
+
+<h3 id="4-select-manual-from-the-list">4. Select <code>Manual</code> from the list:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-4.jpg" alt="Setup process 4" /></p>
+
+<p><br/></p>
+
+<h3 id="5-enter-the-value-that-you-got-from-charles-from-step-1">5. Enter the value that you got from Charles(From Step 1):</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-5.jpg" alt="Setup process 5" /></p>
+
+<p><br/></p>
+
+<h3 id="6-navigate-to-chls-pro-ssl-in-safari">6. Navigate to chls.pro/ssl in Safari:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-6.jpg" alt="Setup process 6" /></p>
+
+<p><br/></p>
+
+<h3 id="6-you-will-get-prompted-to-accept-the-configuration-profile-accept-the-profile">6. You will get prompted to accept the configuration profile. Accept the profile:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-7.jpg" alt="Setup process 7" /></p>
+
+<p><br/></p>
+
+<h3 id="7-click-install-in-the-top-right-on-your-screen">7. Click <code>install</code> in the top right on your screen:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-8.jpg" alt="Setup process 8" /></p>
+
+<p><br/></p>
+
+<h3 id="8-click-install-again-also-in-the-top-right-on-your-screen">8. Click <code>install</code> again, also in the top right on your screen:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-9.jpg" alt="Setup process 9" /></p>
+
+<p><br/></p>
+
+<h3 id="9-click-install-again-when-prompted">9. Click <code>install</code> again when prompted:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-10.jpg" alt="Setup process 10" /></p>
+
+<p><br/></p>
+
+<h3 id="10-navigate-back-to-settings-general-and-click-on-about">10. Navigate back to <code>Settings</code> -&gt; <code>General</code>, and click on <code>About</code>:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-11.jpg" alt="Setup process 11" /></p>
+
+<p><br/></p>
+
+<h3 id="11-scroll-right-to-the-bottom-where-you-can-see-certificate-trust-settings">11. Scroll right to the bottom where you can see <code>Certificate Trust Settings</code>:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-12.jpg" alt="Setup process 12" /></p>
+
+<p><br/></p>
+
+<h3 id="12-click-on-the-switch-on-the-right-of-the-charles-proxy-ca">12. Click on the switch on the right of the <code>Charles Proxy CA</code>:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-13.jpg" alt="Setup process 13" /></p>
+
+<p><br/></p>
+
+<h3 id="13-click-continue-on-the-popup">13. Click <code>Continue</code> on the popup:</h3>
+
+<p><img src="/setup-charles-proxy/setup-device-14.jpg" alt="Setup process 14" /></p>
+
+<p><br/></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>You should now be able to use Charles. If Charles asks you to allow the connection click on <code>Allow</code>. If you don&rsquo;t allow the connection you will not be able to use the proxy until you allow it.</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/how-to-send-local-notification-with-swift/" class="left arrow">&#8592;</a>
+		<a href="/posts/hashvalue-deprecated-as-protocol-requirement/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

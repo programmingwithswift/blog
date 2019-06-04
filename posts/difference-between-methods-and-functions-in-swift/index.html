@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				Difference Between Methods and Functions in Swift &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-05-18 12:08:08 &#43;0200 SAST">May 18, 2019</time>
+</div>
+		<h1 class="post-title">Difference Between Methods and Functions in Swift</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p>I never really thought that there was a difference between a <code>method</code> and a <code>function</code>, and this probably does not deserve its own post, but in this post I will explain the difference between a <code>method</code> and a <code>function</code> in Swift.</p>
+
+<h2 id="functions">Functions</h2>
+
+<p>A <code>function</code> is just some code that will do a specific task. These functions must not be associated with a particular type.</p>
+
+<p>Basically these are global functions and they can be added to any file outside of a particular type.</p>
+
+<h2 id="methods">Methods</h2>
+
+<p>A <code>method</code> is a <code>function</code> but it is associated with a particular type.</p>
+
+<h3 id="two-types-of-methods">Two types of methods</h3>
+
+<p>There are two types of methods. Instance methods and type methods. An instance method is a function that will belong to a specific instance of a class, struct or enum. Instance methods add functionality to an instance and works within that instance.</p>
+
+<h3 id="instance-methods">Instance methods</h3>
+
+<p>For example. If you have class call <code>Car</code>, you might also have an instance method called <code>start</code>. This instance method will update a property on the car called <code>running</code>.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Car</span> 
+{
+    <span style="color:#66d9ef">var</span> running: Bool = <span style="color:#66d9ef">false</span>
+
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">start</span>() 
+    {
+        <span style="color:#66d9ef">self</span>.running = <span style="color:#66d9ef">true</span>
+    }
+}
+
+<span style="color:#66d9ef">let</span> car = Car()
+car.start()</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>As you can see in the above code. We have a <code>Car</code> class that has an instance property and an instance method. All this means is that one needs to create an instance of <code>Car</code> to be able to use or access these properties or methods.</p>
+
+<p>This is different to <code>Type</code> methods which is explained below.</p>
+
+<h4 id="type-methods">Type Methods</h4>
+
+<p>A type method is basically a <code>static</code> method. It does not need an instance of the class to run. Below I take the same example as above with the <code>Car</code> class, but I have added a <code>static</code> method called &lsquo;make&rsquo;. All this type method will do is create a new instance of <code>Car</code>.</p>
+
+<p>I have also added a new <code>static</code> property called <code>numberOfInstances</code>. This will keep track of the number of instances we have created of type <code>Car</code>.</p>
+
+<p>The <code>make</code> method will increment the <code>numberOfInstances</code> property every time it gets called.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Car</span> 
+{
+    <span style="color:#66d9ef">static</span> numberOfInstances = <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">var</span> running: Bool = <span style="color:#66d9ef">false</span>
+
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">start</span>() 
+    {
+        <span style="color:#66d9ef">self</span>.running = <span style="color:#66d9ef">true</span>
+    }
+
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">make</span>() -&gt; Car {
+        Car.numberOfInstances <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">return</span> Car()
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>I have removed the initialization code that I had before because we are going to use the new <code>make</code> method. As you will see below, we do not have to create a new instance of <code>Car</code> in order to use the <code>make</code> method.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">let</span> car = Car.make()
+car.start()</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>In the above code we created a new instance of car, once we have the new instance we can call the instance method <code>start</code>. As you can see from the above code, we did not need to create an instance to use the <code>make</code> method, we just called it directly on the <code>Car</code> type.</p>
+
+<p>Because the <code>make</code> method and the <code>numberOfInstances</code> property are both type properties, we can use them without an instance. We have seen how to use a type method now lets see how to use a type property.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">let</span> newCar = Car.make()
+
+print(<span style="color:#e6db74">&#34;Number of instances: &#34;</span>, Car.numberOfInstances)</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>In the above code we create a new instance of <code>Car</code> by using the <code>make</code> method. After we have done this we can use the <code>numberOfInstances</code> property. We do not need to create a new instance of this property, instead all we have to do is <code>Car.numberOfInstances</code>. When we print this out we it should print out <code>Number of instances: 2</code>, since we called the <code>make</code> method twice.</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/how-to-separate-uitableview-datasource-and-delegate/" class="left arrow">&#8592;</a>
+		<a href="/posts/add-custom-annotation-on-map-view-with-swift/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

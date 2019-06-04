@@ -3,25 +3,95 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/</loc>
-    <lastmod>2019-04-22T12:40:35+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/posts/</loc>
-    <lastmod>2019-04-22T12:40:35+02:00</lastmod>
+    <lastmod>2019-06-01T15:04:30+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/posts/test-post/</loc>
-    <lastmod>2019-04-22T12:40:35+02:00</lastmod>
+    <loc>/</loc>
+    <lastmod>2019-06-01T15:04:30+02:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/posts/first-post/</loc>
-    <lastmod>2019-04-22T10:02:51+02:00</lastmod>
+    <loc>/posts/uitableview-with-static-cells/</loc>
+    <lastmod>2019-06-01T15:04:30+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/fix-the-run-destination-is-not-valid-for-running-the-scheme/</loc>
+    <lastmod>2019-06-01T11:41:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/understanding-completion-handlers-in-swift/</loc>
+    <lastmod>2019-06-01T11:00:38+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/swift-singleton-example/</loc>
+    <lastmod>2019-06-01T10:07:47+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/easily-conform-to-codable/</loc>
+    <lastmod>2019-05-28T19:18:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/hashvalue-deprecated-as-protocol-requirement/</loc>
+    <lastmod>2019-05-27T20:21:32+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/setup-charles-for-iphone/</loc>
+    <lastmod>2019-05-26T16:09:56+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/how-to-send-local-notification-with-swift/</loc>
+    <lastmod>2019-05-25T16:06:54+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/how-to-use-userdefaults-suites-with-swift/</loc>
+    <lastmod>2019-05-25T15:34:49+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/add-custom-annotation-on-map-view-with-swift/</loc>
+    <lastmod>2019-05-25T15:10:45+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/difference-between-methods-and-functions-in-swift/</loc>
+    <lastmod>2019-05-18T12:08:08+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/how-to-separate-uitableview-datasource-and-delegate/</loc>
+    <lastmod>2019-05-18T11:46:16+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/simulate-location-with-xcode/</loc>
+    <lastmod>2019-05-15T17:27:08+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/easily-fix-failed-to-set-plugin-placeholders/</loc>
+    <lastmod>2019-05-11T15:38:46+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/easily-fix-build-only-device-cannot-be-used-to-run-this-project/</loc>
+    <lastmod>2019-05-08T16:24:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/add-core-data-to-existing-ios-project/</loc>
+    <lastmod>2019-05-08T15:55:49+02:00</lastmod>
   </url>
   
   <url>

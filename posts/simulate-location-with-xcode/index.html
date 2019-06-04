@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				Simulate custom location iOS simulator(Simulator, GPX) &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-05-15 17:27:08 &#43;0200 SAST">May 15, 2019</time>
+</div>
+		<h1 class="post-title">Simulate custom location iOS simulator(Simulator, GPX)</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p><img src="/simulate-location-with-xcode/feature.png" alt="Top Menu Debug" /></p>
+
+<p>In this post I will show you a couple of methods on how you can simulate custom/different locations on the iOS simulator.</p>
+
+<p>Being able to add custom locations means that you can easily test to see if your app is working correctly when using you are using Core Location. By default Xcode has a few locations that you can use, which is great, but custom locations will allow you to potentially test more complex situations in your applications.</p>
+
+<h2 id="simulator">Simulator</h2>
+
+<ol>
+<li><p>To set a custom location in the Simulator you will need to start up the simulator. Once it is started, click on the <em>Debug</em> item in the simulator menu bar.</p>
+
+<p><img src="/simulate-location-with-xcode/debug.png" alt="Top Menu Debug" /></p></li>
+
+<li><p>Now hover over <em>Location</em> and click on <em>Custom location</em></p>
+
+<p><img src="/simulate-location-with-xcode/customLocation.png" alt="Custom Location" /></p></li>
+
+<li><p>You will now be able to set a custom location by entering the latitude and longitude of the location you want to simulate.</p>
+
+<p><img src="/simulate-location-with-xcode/coords.png" alt="Set coordinates" /></p></li>
+</ol>
+
+<h2 id="custom-location-with-gpx-file-a-better-way-to-do-it">Custom location with GPX file - A better way to do it</h2>
+
+<p>This is the best way to add custom locations. It will allow you to add many different ones. Add custom locations in this way also makes it much easier to switch to different locations while the app is running on the simulator.</p>
+
+<ol>
+<li><p>Create a new file in your project</p>
+
+<p><img src="/simulate-location-with-xcode/newFile.png" alt="Create new container" /></p></li>
+
+<li><p>Select <em>GPX File</em></p>
+
+<p><img src="/simulate-location-with-xcode/gpxFile.png" alt="Select GPX file" /></p></li>
+
+<li><p>Make sure to name it with the location you adding to it. This will become clear later on in the post.</p>
+
+<p><img src="/simulate-location-with-xcode/nameFile.png" alt="Name file" /></p></li>
+
+<li><p>Update the file with the coordinates you want and update the name of the location.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34;?&gt;</span>
+<span style="color:#f92672">&lt;gpx</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.1&#34;</span> <span style="color:#a6e22e">creator=</span><span style="color:#e6db74">&#34;Xcode&#34;</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">    Provide one or more waypoints containing a latitude/longitude pair. If you provide one 
+</span><span style="color:#75715e">    waypoint, Xcode will simulate that specific location. If you provide multiple waypoints, 
+</span><span style="color:#75715e">    Xcode will simulate a route visiting each waypoint
+</span><span style="color:#75715e">    --&gt;</span>
+    <span style="color:#f92672">&lt;wpt</span> <span style="color:#a6e22e">lat=</span><span style="color:#e6db74">&#34;53.4803732&#34;</span> <span style="color:#a6e22e">lon=</span><span style="color:#e6db74">&#34;-2.2449338&#34;</span><span style="color:#f92672">&gt;</span>
+        <span style="color:#f92672">&lt;name&gt;</span>Manchester<span style="color:#f92672">&lt;/name&gt;</span>
+
+        <span style="color:#75715e">&lt;!--
+</span><span style="color:#75715e">        Optionally provide a time element for each waypoint. Xcode will interpolate movement 
+</span><span style="color:#75715e">        at a rate of speed based on the time elapsed between each waypoint. If you do not provide 
+</span><span style="color:#75715e">        a time element, then Xcode will use a fixed rate of speed. 
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">        Waypoints must be sorted by time in ascending order.
+</span><span style="color:#75715e">        --&gt;</span>
+        <span style="color:#f92672">&lt;time&gt;</span>2014-09-24T14:55:37Z<span style="color:#f92672">&lt;/time&gt;</span>
+    <span style="color:#f92672">&lt;/wpt&gt;</span>
+<span style="color:#f92672">&lt;/gpx&gt;</span>
+    </code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>Go to Xcodes menu bar and click <em>Debug</em></p></li>
+
+<li><p>Next you need to hover over <em>Simulate location</em></p></li>
+
+<li><p>You should see the custom location that you have added. This is why it was important to give the file the name of the location, otherwise it will be difficult to distinguish between multiple locations if their file names have vague names.</p>
+
+<p><img src="/simulate-location-with-xcode/simulateLocation.png" alt="Simulate location" /></p></li>
+</ol>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>I hope that you found this tutorial useful, if it did, feel free to share it or to subscribe to my <a href="https://youtube.com/">youtube channel</a></p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/easily-fix-failed-to-set-plugin-placeholders/" class="left arrow">&#8592;</a>
+		<a href="/posts/how-to-separate-uitableview-datasource-and-delegate/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

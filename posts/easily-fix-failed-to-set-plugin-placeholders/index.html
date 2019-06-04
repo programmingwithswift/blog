@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				Easily fix &#34;Failed to set plugin placeholders&#34; in Xcode &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-05-11 15:38:46 &#43;0200 SAST">May 11, 2019</time>
+</div>
+		<h1 class="post-title">Easily fix &#34;Failed to set plugin placeholders&#34; in Xcode</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p><img src="/easily-fix-failed-to-set-plugin/feature.png" alt="Featured image" /></p>
+
+<p>I was setting up rich notifications the other using a library and I was required to create a few extra targets. I followed all the steps correctly but Xcode was not liking what I had done.</p>
+
+<p>Xcode would build successfully but it would prompt me saying that it failed to set plugin placeholders. Personally I had never seen this message before so I started googling, turns out it was a really simple fix.</p>
+
+<p>Before we get to the fix, make sure to clean your build folder as well as delete derived data. I always do this before trying a fix as one never knows what issues these things can cause.</p>
+
+<p>Great, now that you have cleaned your build folder and deleted your derived data we can get started.</p>
+
+<h2 id="step-1">Step 1</h2>
+
+<p>Click on your project in the <code>Project Navigator</code></p>
+
+<p><img src="/easily-fix-failed-to-set-plugin/projectNavigator.png" alt="Project manager" /></p>
+
+<h2 id="step-2">Step 2</h2>
+
+<p>Next you will need to select your main target and go to its <code>build phases</code> tab.</p>
+
+<p><img src="/easily-fix-failed-to-set-plugin/mainTarget.png" alt="Main Target" /></p>
+
+<h2 id="step-3">Step 3</h2>
+
+<p>Once you are on the <code>build phases</code> tab you should see a drop down that says <code>Embed App Extensions</code>, click on that. Now that you have opened <code>Embed App Extensions</code> you should see a checkbox that says <code>Copy only when installing</code>. You need to check that checkbox.</p>
+
+<p><img src="/easily-fix-failed-to-set-plugin/embedAppExtensions.png" alt="Embed App Extensions" /></p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/easily-fix-build-only-device-cannot-be-used-to-run-this-project/" class="left arrow">&#8592;</a>
+		<a href="/posts/simulate-location-with-xcode/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

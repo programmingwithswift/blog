@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				UITableView With Static Cells &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-06-01 15:04:30 &#43;0200 SAST">June 1, 2019</time>
+</div>
+		<h1 class="post-title">UITableView With Static Cells</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p>Today I will show you how to create custom table view cells and use it in a static table view. A static table view can be useful when creating menu&rsquo;s that do not change or anything else that does not change.</p>
+
+<p>Custom cells for static table view are done in the exact same way as custom cells for dynamic table views. One needs to register the nib and then use the <code>cellForRowAt</code> method to use the custom cell.</p>
+
+<p>The biggest difference when using a static table view is that you need to do it through <code>Interface builder</code>, and it needs to use a <code>UITableViewController</code>. You cannot add a normal <code>UITableView</code> in a <code>UIViewController</code>.</p>
+
+<p>Now that we have the basics covered we can start implementing the static table view with custom cells.</p>
+
+<h2 id="step-1-use-a-uitableviewcontroller">Step 1: Use a <code>UITableViewController</code></h2>
+
+<p>For this tutorial we are going to remove the default <code>UIViewController</code> and replace it with the <code>UITableViewController</code>. This will allow us to set the table view to be static and then we add or remove cells as we need.</p>
+
+<p><img src="/static-tableview/step1.png" alt="Removed UIViewController and use UITableViewController" /></p>
+
+<h2 id="step-2-set-initial-view-controller">Step 2: Set initial view controller</h2>
+
+<p>We removed the original view controller and added the new table view controller. What we need to do now is update the <code>Is initial view controller</code> property for the new table view controller.</p>
+
+<p><img src="/static-tableview/step14.png" alt="Is initial view controller" /></p>
+
+<h2 id="step-3-update-viewcontroller-swift">Step 3: Update <code>ViewController.swift</code></h2>
+
+<p>Because we have removed the default view controller and we are now using the table view controller, we need update our <code>ViewController.swift</code> file to subclass <code>UITableViewController</code> instead of <code>UIViewController</code>.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewController</span>: UITableViewController</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>We also need to change the class in <code>Interface builder</code> for the table view controller to be of type <code>ViewController</code>.</p>
+
+<p>![ADD IMAGE]()</p>
+
+<h2 id="step-4-make-table-view-static">Step 4: Make table view static</h2>
+
+<p>To do this go <code>Interface builder</code> and click on the <code>Table View</code>.</p>
+
+<p><img src="/static-tableview/step3.png" alt="Table view" /></p>
+
+<p>Now you need to set the content type of the table view.</p>
+
+<p><img src="/static-tableview/step4.png" alt="Table view content type" /></p>
+
+<h2 id="step-5-add-a-new-file-for-the-custom-cell">Step 5: Add a new file for the custom cell</h2>
+
+<p>Now that we have the basic setup done we can start working on getting the cells to show up. Before we do that we need to create the new cell.</p>
+
+<p>To do this add a new file to your project:</p>
+
+<p><img src="/static-tableview/step7.png" alt="Add new file" /></p>
+
+<p>Next choose <code>cocoa touch class</code>:</p>
+
+<p><img src="/static-tableview/step8.png" alt="Cocoa touch class" /></p>
+
+<p>Give the new file a name and make sure to include <code>Also create XIB file</code> as well as to set the <code>Subclass of</code> to be of type <code>UITableViewCell</code>:</p>
+
+<p><img src="/static-tableview/step9.png" alt="Name file and create nib" /></p>
+
+<h2 id="step-6-style-the-cell">Step 6: Style the cell</h2>
+
+<p>Click on the <code>CustomStaticCellTableViewCell.xib</code>, click on the view and change the height of that view.</p>
+
+<p><img src="/static-tableview/step10.png" alt="Change height of view" /></p>
+
+<p>After we have set the height of the cell, we need to add a view and a label to the cell. It should look similar to the below:</p>
+
+<p>![ADD IMAGE]()</p>
+
+<p>Make sure that once you have added the view and label that you create the outlets for them. We will be using the label outlet later on.</p>
+
+<h2 id="step-7-reuse-identifier">Step 7: <code>Reuse Identifier</code></h2>
+
+<p>Go back to the <code>Main.storyboard</code>. For each cell you will need to change the <code>Reuse Identifier</code>. We will be using this later on, you can find the <code>Reuse Identifier</code> here:</p>
+
+<p>![ADD IMAGE]()</p>
+
+<h2 id="step-8-code-time">Step 8: Code time</h2>
+
+<p>All the visual work is done now, so we can finally get started on the code. For this we need to open <code>ViewController.swift</code>. In this file we are going to add two methods. The first will be to register the custom cell that we created, and the other one will be the <code>cellForRowAt</code> table view method.</p>
+
+<p>First things first, lets add the <code>registerCell</code> method:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">registerCell</span>() {
+    <span style="color:#66d9ef">let</span> cell = UINib(nibName: <span style="color:#e6db74">&#34;CustomStaticCellTableViewCell&#34;</span>,
+                        bundle: <span style="color:#66d9ef">nil</span>)
+    <span style="color:#66d9ef">self</span>.tableView.register(cell,
+                            forCellReuseIdentifier: <span style="color:#e6db74">&#34;CustomCell&#34;</span>)
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>In this method we register the custom cell nib with the table view, this is also one of the places where we use the <code>Reuse identifier</code> that we created earlier. If we do not do this then the app will crash if we try and use this cell.</p>
+
+<p>The next thing to do is to implement the <code>cellForRowAt</code> method.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">override</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">tableView</span>(<span style="color:#66d9ef">_</span> tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell {
+    <span style="color:#66d9ef">guard</span> <span style="color:#66d9ef">let</span> cell = tableView.dequeueReusableCell(withIdentifier: <span style="color:#e6db74">&#34;CustomCell&#34;</span>) <span style="color:#66d9ef">as</span>? CustomStaticCellTableViewCell <span style="color:#66d9ef">else</span> {
+        <span style="color:#66d9ef">return</span> UITableViewCell()
+    }
+    
+    cell.label.text = <span style="color:#e6db74">&#34;Test </span><span style="color:#e6db74">\(</span>indexPath.row<span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span>
+    
+    <span style="color:#66d9ef">return</span> cell
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>This is the second time that we need to use the <code>Reuse identifier</code> that we created. In this method we try and cast the cell in the table view to be of type <code>CustomStaticCellTableViewCell</code>, if it can cast the cell then we set the label text. This is the label that we added earlier as an outlet.</p>
+
+<p>The last thing that we need to do now is to call the <code>registerCell</code> method. To do this update the <code>viewDidLoad</code> method to look like this:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">override</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">viewDidLoad</span>() {
+    <span style="color:#66d9ef">super</span>.viewDidLoad()
+    <span style="color:#66d9ef">self</span>.registerCell()
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/fix-the-run-destination-is-not-valid-for-running-the-scheme/" class="left arrow">&#8592;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

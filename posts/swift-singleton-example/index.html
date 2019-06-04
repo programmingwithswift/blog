@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				Create a Singleton with Swift &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-06-01 10:07:47 &#43;0200 SAST">June 1, 2019</time>
+</div>
+		<h1 class="post-title">Create a Singleton with Swift</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p>Today I will show you how to create a singleton with Swift. Singletons are a very touchy subject when it comes to programming. Personally I do not have an issue with them as long as it is used appropriately.</p>
+
+<h2 id="why-use-a-singleton">Why use a Singleton</h2>
+
+<p>The use case for a singleton is relatively small. The very few places where singletons can be used is when they are immutable or when they are one way.</p>
+
+<p>What I mean by one way is that the information flows from your logic to somewhere else, it does not come back to your logic. A logger is a good example of this. When you want to log something you will tell the singleton what to log and it will log it. This is not an issue as nothing is returned and you do not need any information back from the logger.</p>
+
+<p>Immutable situations could be where you need to do a certain calculation. If that calculation only relies on the arguments that gets passed in, then there will be no issue as it will not be relying on any state of the singleton.</p>
+
+<h2 id="why-do-people-dislike-singletons">Why do people dislike Singletons</h2>
+
+<h3 id="global-state">Global state</h3>
+
+<p>Global state is bad because it can get changed at any time. The problem with this is that if there are multiple objects that rely on that state and any one of those objects can change the state at any time then it makes the program unpredictable because you do not know what the starting state was.</p>
+
+<p>This can introduce some major bugs into the program and at the same time making it difficult to debug as you will have no idea what has changed the state or when it was changed.</p>
+
+<h3 id="tightly-coupled-code">Tightly coupled code</h3>
+
+<p>Tightly coupled code is when one piece of code relies on another piece of code, and it cannot work without that code. Code will generally have dependencies but there are different ways to go about handling those dependencies. People generally use a singleton directly, this causes their code to be tightly coupled to that singleton. If that singleton needs to be updated or removed, the change to the codebase could be huge.</p>
+
+<h3 id="they-can-make-testing-more-difficult">They can make testing more difficult</h3>
+
+<p>This will depend on depend on what is being done with the singleton and how it is being used. Generally the issue is that the singleton creates itself.</p>
+
+<p>The problem with this is that one cannot test it easily, or at all. The reason this makes it difficult to test is because one cannot substitute different implementations. For testing you might want an implementation that is used for testing and not to be using live/staging code. But when a singleton creates itself, you cannot use a different implementation.</p>
+
+<h2 id="how-to-create-a-singleton-in-swift">How to create a Singleton in Swift</h2>
+
+<p>Finally we can get started with implementing a singleton. The basic idea of a singleton is for it to create an instance of itself. Generally this means that the initializer will be private and you will access the instance via a static property on the class.</p>
+
+<p>Lets see what that looks like:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span> {
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">let</span> instance = Singleton()
+    
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">init</span>() {
+        <span style="color:#75715e">// Code here</span>
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>That will be the basis of our singleton. We have a private initializer and a static constant that we use. This constant will create only one instance of <code>Singleton</code>.</p>
+
+<p>Lets test this out to make sure that it is working as expected. To do this we will add another function that will print a message to the console, and we will update the initializer to print out everytime it gets called.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span> {
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">let</span> instance = Singleton()
+    
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">init</span>() {
+        print(<span style="color:#e6db74">&#34;Initialize the singleton&#34;</span>)
+    }
+    
+    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">log</span>(message: String) {
+        print(<span style="color:#e6db74">&#34;Log: &#34;</span>, message)
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>This code will now print out everytime the <code>Singleton</code> class has been initialized. We have also added code that will log a message to the console.</p>
+
+<p>Lets use the above code. To do this we will access the <code>instance</code> property and call the methods from that <code>instance</code> property.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">Singleton.instance.log(message: <span style="color:#e6db74">&#34;This is a test message&#34;</span>)
+Singleton.instance.log(message: <span style="color:#e6db74">&#34;Another message&#34;</span>)</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>When you run the to lines above you should see an output like the below output:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">Initialize the singleton
+Log:  This <span style="color:#66d9ef">is</span> a test message
+Log:  Another message</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>The output proves that the instance is only created once. The first time we access the <code>instance</code> property it will create a new instance of the <code>Singleton</code> class. When we access the <code>instance</code> property for a second time it does not create a new instance, so we only see the message that we have logged.</p>
+
+<h2 id="when-to-use-a-singleton">When to use a Singleton</h2>
+
+<p>To know when to use a singleton just follow the reasons that I have mentioned in terms of <code>Why use a singleton</code>. Only choose to use a singleton if it is immutable, or if it is used for one way logic, i.e something like logging.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Singletons can be very useful but they are dangerous to use. Singletons mostly get abused and that is what has made people dislike them. Generally if you need to use a singleton you are probably doing something wrong and you should think more carefully about how to go about implementing what you want to implement. Dependency injection is one solution to the issue. That being said there are use cases for singletons, just make sure that your use case is valid one.</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/easily-conform-to-codable/" class="left arrow">&#8592;</a>
+		<a href="/posts/understanding-completion-handlers-in-swift/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

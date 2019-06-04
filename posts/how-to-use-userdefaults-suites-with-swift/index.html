@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>
+				How to Use Userdefaults Suites With Swift &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-05-25 15:34:49 &#43;0200 SAST">May 25, 2019</time>
+</div>
+		<h1 class="post-title">How to Use Userdefaults Suites With Swift</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<h2 id="what-are-userdefaults-suites">What are UserDefaults suites</h2>
+
+<p><code>UserDefaults</code> contains different suites that are identified by their <code>suiteName</code>. This can allow you to create different <code>UserDefaults</code> for different sections of your app, but it also allows you to share content between multiple apps and extensions that use the same <code>App Group</code>.</p>
+
+<blockquote>
+<p>Your <code>suiteName</code> cannot be the same as your apps <code>bundle identifier</code>. Using the <code>global domain</code> is also not allowed as it is not writeable by apps.</p>
+</blockquote>
+
+<h2 id="step-1-create-new-suite">Step 1: Create new suite</h2>
+
+<p>Creating a new <code>suite</code> with <code>UserDefaults</code> is super simple. All we have to do is initialize <code>UserDefaults</code> with the <code>suiteName</code> that we want to use.</p>
+
+<p>I am going to create two suites so that we can see later on how each suite has a different <code>value</code> for the same <code>key</code>.</p>
+
+<p>I am doing everything in the <code>viewDidLoad</code> for this step so that I cannot use these instances of <code>UserDefaults</code> later on.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">override</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">viewDidLoad</span>() {
+        <span style="color:#66d9ef">super</span>.viewDidLoad()
+        
+        <span style="color:#75715e">// Create the UserDefaults suites</span>
+        <span style="color:#66d9ef">let</span> testSuite = UserDefaults(suiteName: <span style="color:#e6db74">&#34;testSuite&#34;</span>)
+        <span style="color:#66d9ef">let</span> appSuite = UserDefaults(suiteName: <span style="color:#e6db74">&#34;appSuite&#34;</span>)
+    }</code></pre></td></tr></table>
+</div>
+</div>
+
+<h2 id="step-2-add-data-to-the-different-suites">Step 2: Add data to the different suites</h2>
+
+<p>Now that we have created the two suites we need to add some data to them.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">override</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">viewDidLoad</span>() {
+        <span style="color:#66d9ef">super</span>.viewDidLoad()
+        
+        <span style="color:#75715e">// Create the UserDefaults suites</span>
+        <span style="color:#66d9ef">let</span> testSuite = UserDefaults(suiteName: <span style="color:#e6db74">&#34;testSuite&#34;</span>)
+        <span style="color:#66d9ef">let</span> appSuite = UserDefaults(suiteName: <span style="color:#e6db74">&#34;appSuite&#34;</span>)
+
+        <span style="color:#75715e">// Set values in both suites</span>
+        testSuite?.<span style="color:#66d9ef">set</span>(<span style="color:#e6db74">&#34;My test value for defaults&#34;</span>,
+                            forKey: <span style="color:#e6db74">&#34;sameKey&#34;</span>)
+        appSuite?.<span style="color:#66d9ef">set</span>(<span style="color:#e6db74">&#34;My app value for defaults&#34;</span>,
+                      forKey: <span style="color:#e6db74">&#34;sameKey&#34;</span>)
+    }</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>In the above code I updated my <code>viewDidLoad</code> method to set a unique value for my <code>testSuite</code> and my <code>appSuite</code>. Both suites use the same value for their key, in this example the key is <code>sameKey</code>.</p>
+
+<h2 id="step-3-getting-the-data-out-of-userdefaults">Step 3: Getting the data out of <code>UserDefaults</code></h2>
+
+<p>Now all we need to do is to get the unique data out from each <code>suite</code> that we created. To do this I am going to create two super simple methods which will be name <code>fromTestSuite</code> and <code>fromAppSuite</code>.</p>
+
+<p>The code is as follows:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fromTestSuite</span>()
+{
+    <span style="color:#66d9ef">let</span> testSuite = UserDefaults(suiteName: <span style="color:#e6db74">&#34;testSuite&#34;</span>)
+    <span style="color:#66d9ef">let</span> valueForSameKey = testSuite?.object(forKey: <span style="color:#e6db74">&#34;sameKey&#34;</span>)
+    
+    print(<span style="color:#e6db74">&#34;Test Suite: &#34;</span>, valueForSameKey)
+}
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fromAppSuite</span>()
+{
+    <span style="color:#66d9ef">let</span> appSuite = UserDefaults(suiteName: <span style="color:#e6db74">&#34;appSuite&#34;</span>)
+    <span style="color:#66d9ef">let</span> valueForSameKey = appSuite?.object(forKey: <span style="color:#e6db74">&#34;sameKey&#34;</span>)
+    
+    print(<span style="color:#e6db74">&#34;App Suite: &#34;</span>, valueForSameKey)
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>All these methods do is create a new instance for the appropriate suite. It will then get the value for <code>sameKey</code> and print that out to the console.</p>
+
+<h2 id="step-4-calling-the-above-methods">Step 4: Calling the above methods</h2>
+
+<p>All we have to do now is call the above methods. Once again I have put this code into my <code>viewDidLoad</code> method as shown below:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">override</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">viewDidLoad</span>() {
+    <span style="color:#66d9ef">super</span>.viewDidLoad()
+    
+
+    <span style="color:#75715e">// Create the UserDefaults suites</span>
+    <span style="color:#66d9ef">let</span> testSuite = UserDefaults(suiteName: <span style="color:#e6db74">&#34;testSuite&#34;</span>)
+    <span style="color:#66d9ef">let</span> appSuite = UserDefaults(suiteName: <span style="color:#e6db74">&#34;appSuite&#34;</span>)
+
+    <span style="color:#75715e">// Set values in both suites</span>
+    testSuite?.<span style="color:#66d9ef">set</span>(<span style="color:#e6db74">&#34;My test value for defaults&#34;</span>,
+                    forKey: <span style="color:#e6db74">&#34;sameKey&#34;</span>)
+    appSuite?.<span style="color:#66d9ef">set</span>(<span style="color:#e6db74">&#34;My app value for defaults&#34;</span>,
+                    forKey: <span style="color:#e6db74">&#34;sameKey&#34;</span>)
+    
+
+    <span style="color:#75715e">// Call print the values in the console.</span>
+    <span style="color:#66d9ef">self</span>.fromTestSuite()
+    <span style="color:#66d9ef">self</span>.fromAppSuite()
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>If you run the app now you should see the unique values from each <code>suite</code> using the same key.</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/add-custom-annotation-on-map-view-with-swift/" class="left arrow">&#8592;</a>
+		<a href="/posts/how-to-send-local-notification-with-swift/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>
