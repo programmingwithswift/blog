@@ -2,40 +2,40 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Programming with Swift</title>
-    <link>/</link>
+    <link>https://programmingwithswift.github.io/blog/</link>
     <description>Recent content on Programming with Swift</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sat, 01 Jun 2019 15:04:30 +0200</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://programmingwithswift.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>UITableView With Static Cells</title>
-      <link>/posts/uitableview-with-static-cells/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/uitableview-with-static-cells/</link>
       <pubDate>Sat, 01 Jun 2019 15:04:30 +0200</pubDate>
       
-      <guid>/posts/uitableview-with-static-cells/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/uitableview-with-static-cells/</guid>
       <description>Today I will show you how to create custom table view cells and use it in a static table view. A static table view can be useful when creating menu&amp;rsquo;s that do not change or anything else that does not change.
 Custom cells for static table view are done in the exact same way as custom cells for dynamic table views. One needs to register the nib and then use the cellForRowAt method to use the custom cell.</description>
     </item>
     
     <item>
       <title>Fix &#34;the Run Destination Is Not Valid for Running the Scheme&#34;</title>
-      <link>/posts/fix-the-run-destination-is-not-valid-for-running-the-scheme/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/fix-the-run-destination-is-not-valid-for-running-the-scheme/</link>
       <pubDate>Sat, 01 Jun 2019 11:41:38 +0200</pubDate>
       
-      <guid>/posts/fix-the-run-destination-is-not-valid-for-running-the-scheme/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/fix-the-run-destination-is-not-valid-for-running-the-scheme/</guid>
       <description>This is can be a frustrating issue. One of the fixes for this is to restart Xcode. There can also be another solution and that is to change the device that you have chosen for deployment.
 This issue can also occur if you are trying to run the app on an iPhone but you have set your Device under Deployment info to iPad, or vice versa.</description>
     </item>
     
     <item>
       <title>Understanding Completion Handlers in Swift</title>
-      <link>/posts/understanding-completion-handlers-in-swift/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/understanding-completion-handlers-in-swift/</link>
       <pubDate>Sat, 01 Jun 2019 11:00:38 +0200</pubDate>
       
-      <guid>/posts/understanding-completion-handlers-in-swift/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/understanding-completion-handlers-in-swift/</guid>
       <description>What is a completion handler A completion handler is basically just a function that gets passed as a parameter of another function.
 The reason that we would want to do this is because we want to be notified when something is complete. Generally we use functions that return a value, but this is only useful when we are doing synchronous work. For asynchronous work we use completion handlers.
 A good example of this is when we do a network request.</description>
@@ -43,20 +43,20 @@ A good example of this is when we do a network request.</description>
     
     <item>
       <title>Create a Singleton with Swift</title>
-      <link>/posts/swift-singleton-example/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/swift-singleton-example/</link>
       <pubDate>Sat, 01 Jun 2019 10:07:47 +0200</pubDate>
       
-      <guid>/posts/swift-singleton-example/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/swift-singleton-example/</guid>
       <description>Today I will show you how to create a singleton with Swift. Singletons are a very touchy subject when it comes to programming. Personally I do not have an issue with them as long as it is used appropriately.
 Why use a Singleton The use case for a singleton is relatively small. The very few places where singletons can be used is when they are immutable or when they are one way.</description>
     </item>
     
     <item>
       <title>Easily Conform to Codable</title>
-      <link>/posts/easily-conform-to-codable/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/easily-conform-to-codable/</link>
       <pubDate>Tue, 28 May 2019 19:18:36 +0200</pubDate>
       
-      <guid>/posts/easily-conform-to-codable/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/easily-conform-to-codable/</guid>
       <description>Today I will show you how to fix Type does not conform to protocol &#39;Decodable&#39;. The fix is not difficult but it can be annoying that one needs to write wrappers for the types that do not conform.
 Lets get started. The below code is my broken example.
 1 2 3 4 5 6  struct User: Codable { let name: String let email: String let profilePicture: UIImage let location: CLLocationCoordinate2D }   The problem with the above code is that both UIImage and CLLocationCoordinate2D do not conform to Decodable.</description>
@@ -64,10 +64,10 @@ Lets get started. The below code is my broken example.
     
     <item>
       <title>Hashvalue Deprecated as Protocol Requirement</title>
-      <link>/posts/hashvalue-deprecated-as-protocol-requirement/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/hashvalue-deprecated-as-protocol-requirement/</link>
       <pubDate>Mon, 27 May 2019 20:21:32 +0200</pubDate>
       
-      <guid>/posts/hashvalue-deprecated-as-protocol-requirement/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/hashvalue-deprecated-as-protocol-requirement/</guid>
       <description>I have recently been going through warnings on a project I am working on. One of the warnings was &#39;Hashable.hashValue&#39; is deprecated as a protocol requirement; conform type to &#39;Hashable&#39; by implementing &#39;hash(into:)&#39; instead.
 This confused me a bit so I decided to carry on with the other warnings. It turns out this is a really simple fix.
 Here is an example of the issue:
@@ -76,20 +76,20 @@ Here is an example of the issue:
     
     <item>
       <title>Setup Charles for iPhone</title>
-      <link>/posts/setup-charles-for-iphone/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/setup-charles-for-iphone/</link>
       <pubDate>Sun, 26 May 2019 16:09:56 +0200</pubDate>
       
-      <guid>/posts/setup-charles-for-iphone/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/setup-charles-for-iphone/</guid>
       <description>In this tutorial I will show you how to setup Charles with your iPhone. Charles is an extremely useful tool. I have used it often to debug my network calls, or to change the value that the server has returned to ensure that my app is behaving correctly.
 Step 1: Get the proxy details The first thing that you need to do once you have Charles open is to navigate to:</description>
     </item>
     
     <item>
       <title>How to Send Local Notification With Swift 5</title>
-      <link>/posts/how-to-send-local-notification-with-swift/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/how-to-send-local-notification-with-swift/</link>
       <pubDate>Sat, 25 May 2019 16:06:54 +0200</pubDate>
       
-      <guid>/posts/how-to-send-local-notification-with-swift/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/how-to-send-local-notification-with-swift/</guid>
       <description>Notifications can be daunting, in this post I hope to make it simple by showing you how to send local notification as well as how to handle the user tapping that notification.
 
 Foundational information Local notifications have three main parts. The content, trigger and request. These three parts will allow you to create a local notification.
@@ -98,20 +98,20 @@ Content The content of a notification is straight forward. It is what you are go
     
     <item>
       <title>How to Use Userdefaults Suites With Swift</title>
-      <link>/posts/how-to-use-userdefaults-suites-with-swift/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/how-to-use-userdefaults-suites-with-swift/</link>
       <pubDate>Sat, 25 May 2019 15:34:49 +0200</pubDate>
       
-      <guid>/posts/how-to-use-userdefaults-suites-with-swift/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/how-to-use-userdefaults-suites-with-swift/</guid>
       <description>What are UserDefaults suites UserDefaults contains different suites that are identified by their suiteName. This can allow you to create different UserDefaults for different sections of your app, but it also allows you to share content between multiple apps and extensions that use the same App Group.
  Your suiteName cannot be the same as your apps bundle identifier. Using the global domain is also not allowed as it is not writeable by apps.</description>
     </item>
     
     <item>
       <title>Add MKPointAnnotation on Map View With Swift</title>
-      <link>/posts/add-custom-annotation-on-map-view-with-swift/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/add-custom-annotation-on-map-view-with-swift/</link>
       <pubDate>Sat, 25 May 2019 15:10:45 +0200</pubDate>
       
-      <guid>/posts/add-custom-annotation-on-map-view-with-swift/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/add-custom-annotation-on-map-view-with-swift/</guid>
       <description>Adding a MKPointAnnotation on a map with Swift is quite simple and in this tutorial I will show you how to add a annotaiton to a MKMapView with Swift.
 For this tutorial I will assume that you have already setup your map view. If you haven&amp;rsquo;t I have another tutorial, Getting started with MKMapView, that will help you to get started with MKMapView.
 Ok, lets get started.
@@ -120,10 +120,10 @@ Step 1: Creating the annotation 1 2 3 4 5  // Create MKPointaAnnotation let anno
     
     <item>
       <title>Difference Between Methods and Functions in Swift</title>
-      <link>/posts/difference-between-methods-and-functions-in-swift/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/difference-between-methods-and-functions-in-swift/</link>
       <pubDate>Sat, 18 May 2019 12:08:08 +0200</pubDate>
       
-      <guid>/posts/difference-between-methods-and-functions-in-swift/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/difference-between-methods-and-functions-in-swift/</guid>
       <description>I never really thought that there was a difference between a method and a function, and this probably does not deserve its own post, but in this post I will explain the difference between a method and a function in Swift.
 Functions A function is just some code that will do a specific task. These functions must not be associated with a particular type.
 Basically these are global functions and they can be added to any file outside of a particular type.</description>
@@ -131,40 +131,40 @@ Basically these are global functions and they can be added to any file outside o
     
     <item>
       <title>How to Separate UITableView Datasource and Delegate</title>
-      <link>/posts/how-to-separate-uitableview-datasource-and-delegate/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/how-to-separate-uitableview-datasource-and-delegate/</link>
       <pubDate>Sat, 18 May 2019 11:46:16 +0200</pubDate>
       
-      <guid>/posts/how-to-separate-uitableview-datasource-and-delegate/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/how-to-separate-uitableview-datasource-and-delegate/</guid>
       <description>Today I will show you how to the put a UITableViewDelegate and UITableViewDatasource into different files. One of the main reasons for doing this is to get the all the code out of the view controller. This cleans up the view controller as the view controller does not need to know about the datasource and delegate methods.
 You could take this further by allowing multiple UITableViews to make use of this datasource and delegate, but we will not be getting into that in this tutorial.</description>
     </item>
     
     <item>
       <title>Simulate custom location iOS simulator(Simulator, GPX)</title>
-      <link>/posts/simulate-location-with-xcode/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/simulate-location-with-xcode/</link>
       <pubDate>Wed, 15 May 2019 17:27:08 +0200</pubDate>
       
-      <guid>/posts/simulate-location-with-xcode/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/simulate-location-with-xcode/</guid>
       <description>In this post I will show you a couple of methods on how you can simulate custom/different locations on the iOS simulator.
 Being able to add custom locations means that you can easily test to see if your app is working correctly when using you are using Core Location. By default Xcode has a few locations that you can use, which is great, but custom locations will allow you to potentially test more complex situations in your applications.</description>
     </item>
     
     <item>
       <title>Easily fix &#34;Failed to set plugin placeholders&#34; in Xcode</title>
-      <link>/posts/easily-fix-failed-to-set-plugin-placeholders/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/easily-fix-failed-to-set-plugin-placeholders/</link>
       <pubDate>Sat, 11 May 2019 15:38:46 +0200</pubDate>
       
-      <guid>/posts/easily-fix-failed-to-set-plugin-placeholders/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/easily-fix-failed-to-set-plugin-placeholders/</guid>
       <description>I was setting up rich notifications the other using a library and I was required to create a few extra targets. I followed all the steps correctly but Xcode was not liking what I had done.
 Xcode would build successfully but it would prompt me saying that it failed to set plugin placeholders. Personally I had never seen this message before so I started googling, turns out it was a really simple fix.</description>
     </item>
     
     <item>
       <title>Easily fix &#34;build only device cannot be used to run this target&#34;</title>
-      <link>/posts/easily-fix-build-only-device-cannot-be-used-to-run-this-project/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/easily-fix-build-only-device-cannot-be-used-to-run-this-project/</link>
       <pubDate>Wed, 08 May 2019 16:24:20 +0200</pubDate>
       
-      <guid>/posts/easily-fix-build-only-device-cannot-be-used-to-run-this-project/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/easily-fix-build-only-device-cannot-be-used-to-run-this-project/</guid>
       <description>This is an issue that I got recently. I have to be honest, I don’t often write unit tests which is something that I am starting to change, hence me getting stuck with this little issue.
 Turns out I was missing something really obvious. I was using the “Generic iOS Device” from the simulator/device drop down list.
 In order to fix this issue all one needs to do is to switch to a proper simulator or device and this error will go away.</description>
@@ -172,10 +172,10 @@ In order to fix this issue all one needs to do is to switch to a proper simulato
     
     <item>
       <title>Add Core Data to Existing iOS Project</title>
-      <link>/posts/add-core-data-to-existing-ios-project/</link>
+      <link>https://programmingwithswift.github.io/blog/posts/add-core-data-to-existing-ios-project/</link>
       <pubDate>Wed, 08 May 2019 15:55:49 +0200</pubDate>
       
-      <guid>/posts/add-core-data-to-existing-ios-project/</guid>
+      <guid>https://programmingwithswift.github.io/blog/posts/add-core-data-to-existing-ios-project/</guid>
       <description>If you have ever struggled to add Core Data to an existing iOS project, I feel your pain. Years ago when I tried to do it I failed and decided to recreated the project from scratch.
 But recently I decided that I should try and add Core Data into an existing project. It turns out that it is actually quite a simple task.
 There are a few things that are required when adding Core Data to an existing iOS project.</description>
