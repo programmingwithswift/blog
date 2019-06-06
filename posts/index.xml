@@ -5,10 +5,19 @@
     <link>https://programmingwithswift.github.io/posts/</link>
     <description>Recent content in Posts on Programming with Swift</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 01 Jun 2019 15:04:30 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 06 Jun 2019 19:29:50 +0200</lastBuildDate>
     
 	<atom:link href="https://programmingwithswift.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Xcode11 Does Not Show Canvas</title>
+      <link>https://programmingwithswift.github.io/posts/xcode11-does-not-show-canvas/</link>
+      <pubDate>Thu, 06 Jun 2019 19:29:50 +0200</pubDate>
+      
+      <guid>https://programmingwithswift.github.io/posts/xcode11-does-not-show-canvas/</guid>
+      <description>This is a simple but annoying fix. In order for you to use canvas with Xcode 11 you will need upgrade your operation system on your Mac. It needs to be running macOS Catalina/macOS 10.15.</description>
+    </item>
     
     <item>
       <title>UITableView With Static Cells</title>
