@@ -9,12 +9,12 @@
 		</title>
 
 		
-  		<link rel="stylesheet" href="/blog/css/style.css">
+  		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
 		
-		<link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
 
 		
 		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
@@ -23,7 +23,7 @@
     <body>
         		<nav class="nav">
 			<div class="nav-container">
-				<a href="/blog/">
+				<a href="/">
 					<h2 class="nav-title">Programming with Swift</h2>
 				</a>
 				
@@ -59,13 +59,13 @@
 
 <p>For this tutorial we are going to remove the default <code>UIViewController</code> and replace it with the <code>UITableViewController</code>. This will allow us to set the table view to be static and then we add or remove cells as we need.</p>
 
-<p><img src="/blog/static-tableview/step1.png" alt="Removed UIViewController and use UITableViewController" /></p>
+<p><img src="/static-tableview/step1.png" alt="Removed UIViewController and use UITableViewController" /></p>
 
 <h2 id="step-2-set-initial-view-controller">Step 2: Set initial view controller</h2>
 
 <p>We removed the original view controller and added the new table view controller. What we need to do now is update the <code>Is initial view controller</code> property for the new table view controller.</p>
 
-<p><img src="/blog/static-tableview/step14.png" alt="Is initial view controller" /></p>
+<p><img src="/static-tableview/step14.png" alt="Is initial view controller" /></p>
 
 <h2 id="step-3-update-viewcontroller-swift">Step 3: Update <code>ViewController.swift</code></h2>
 
@@ -88,11 +88,11 @@
 
 <p>To do this go <code>Interface builder</code> and click on the <code>Table View</code>.</p>
 
-<p><img src="/blog/static-tableview/step3.png" alt="Table view" /></p>
+<p><img src="/static-tableview/step3.png" alt="Table view" /></p>
 
 <p>Now you need to set the content type of the table view.</p>
 
-<p><img src="/blog/static-tableview/step4.png" alt="Table view content type" /></p>
+<p><img src="/static-tableview/step4.png" alt="Table view content type" /></p>
 
 <h2 id="step-5-add-a-new-file-for-the-custom-cell">Step 5: Add a new file for the custom cell</h2>
 
@@ -100,21 +100,21 @@
 
 <p>To do this add a new file to your project:</p>
 
-<p><img src="/blog/static-tableview/step7.png" alt="Add new file" /></p>
+<p><img src="/static-tableview/step7.png" alt="Add new file" /></p>
 
 <p>Next choose <code>cocoa touch class</code>:</p>
 
-<p><img src="/blog/static-tableview/step8.png" alt="Cocoa touch class" /></p>
+<p><img src="/static-tableview/step8.png" alt="Cocoa touch class" /></p>
 
 <p>Give the new file a name and make sure to include <code>Also create XIB file</code> as well as to set the <code>Subclass of</code> to be of type <code>UITableViewCell</code>:</p>
 
-<p><img src="/blog/static-tableview/step9.png" alt="Name file and create nib" /></p>
+<p><img src="/static-tableview/step9.png" alt="Name file and create nib" /></p>
 
 <h2 id="step-6-style-the-cell">Step 6: Style the cell</h2>
 
 <p>Click on the <code>CustomStaticCellTableViewCell.xib</code>, click on the view and change the height of that view.</p>
 
-<p><img src="/blog/static-tableview/step10.png" alt="Change height of view" /></p>
+<p><img src="/static-tableview/step10.png" alt="Change height of view" /></p>
 
 <p>After we have set the height of the cell, we need to add a view and a label to the cell. It should look similar to the below:</p>
 
@@ -206,7 +206,7 @@
 	</div>
 
 	<div class="pagination">
-		<a href="/blog/posts/fix-the-run-destination-is-not-valid-for-running-the-scheme/" class="left arrow">&#8592;</a>
+		<a href="/posts/fix-the-run-destination-is-not-valid-for-running-the-scheme/" class="left arrow">&#8592;</a>
 
 		<a href="#" class="top">Top</a>
 	</div>
