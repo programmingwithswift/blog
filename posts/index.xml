@@ -20,6 +20,16 @@
     </item>
     
     <item>
+      <title>UITableView With Static Cells</title>
+      <link>https://programmingwithswift.github.io/posts/uitableview-with-static-cells/</link>
+      <pubDate>Sat, 01 Jun 2019 15:04:30 +0200</pubDate>
+      
+      <guid>https://programmingwithswift.github.io/posts/uitableview-with-static-cells/</guid>
+      <description>Today I will show you how to create custom table view cells and use it in a static table view. A static table view can be useful when creating menu&amp;rsquo;s that do not change or app settings. Pretty much anything that can be listed that will have fixed values.
+Custom cells for static table view are done in the exact same way as custom cells for dynamic table views. One needs to register the nib and then use the cellForRowAt method to use the custom cell.</description>
+    </item>
+    
+    <item>
       <title>Fix &#34;the Run Destination Is Not Valid for Running the Scheme&#34;</title>
       <link>https://programmingwithswift.github.io/posts/fix-the-run-destination-is-not-valid-for-running-the-scheme/</link>
       <pubDate>Sat, 01 Jun 2019 11:41:38 +0200</pubDate>

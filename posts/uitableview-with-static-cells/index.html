@@ -12,7 +12,7 @@
 		</script>
 
 		<meta property="og:title" content="UITableView With Static Cells" />
-		<meta property="og:description" content="Today I will show you how to create custom table view cells and use it in a static table view. A static table view can be useful when creating menu&rsquo;s that do not change or anything else that does not change.
+		<meta property="og:description" content="Today I will show you how to create custom table view cells and use it in a static table view. A static table view can be useful when creating menu&rsquo;s that do not change or app settings. Pretty much anything that can be listed that will have fixed values.
 Custom cells for static table view are done in the exact same way as custom cells for dynamic table views. One needs to register the nib and then use the cellForRowAt method to use the custom cell." />
 		<meta property="og:type" content="article" />
 		<meta property="og:url" content="https://programmingwithswift.github.io/posts/uitableview-with-static-cells/" />
@@ -64,7 +64,7 @@ Custom cells for static table view are done in the exact same way as custom cell
 
 		
 
-<p>Today I will show you how to create custom table view cells and use it in a static table view. A static table view can be useful when creating menu&rsquo;s that do not change or anything else that does not change.</p>
+<p>Today I will show you how to create custom table view cells and use it in a static table view. A static table view can be useful when creating menu&rsquo;s that do not change or app settings. Pretty much anything that can be listed that will have fixed values.</p>
 
 <p>Custom cells for static table view are done in the exact same way as custom cells for dynamic table views. One needs to register the nib and then use the <code>cellForRowAt</code> method to use the custom cell.</p>
 
@@ -72,17 +72,29 @@ Custom cells for static table view are done in the exact same way as custom cell
 
 <p>Now that we have the basics covered we can start implementing the static table view with custom cells.</p>
 
+<p><br/></p>
+
 <h2 id="step-1-use-a-uitableviewcontroller">Step 1: Use a <code>UITableViewController</code></h2>
 
 <p>For this tutorial we are going to remove the default <code>UIViewController</code> and replace it with the <code>UITableViewController</code>. This will allow us to set the table view to be static and then we add or remove cells as we need.</p>
 
-<p><img src="/static-tableview/step1.png" alt="Removed UIViewController and use UITableViewController" /></p>
+<p><img src="/static-tableview/defaultViewController.png" alt="Removed UIViewController and use UITableViewController" /></p>
+
+<p>After you have selected the viewController as shown in the image above, delete the view controller. Next you will want to press <code>cmd + shift + l</code> and then type <code>tableviewcontroller</code>. Drag the table view controller into interface builder.</p>
+
+<p>It should look like the below:</p>
+
+<p><img src="/static-tableview/tableViewController.png" alt="Removed UIViewController and use UITableViewController" /></p>
+
+<p><br/></p>
 
 <h2 id="step-2-set-initial-view-controller">Step 2: Set initial view controller</h2>
 
 <p>We removed the original view controller and added the new table view controller. What we need to do now is update the <code>Is initial view controller</code> property for the new table view controller.</p>
 
 <p><img src="/static-tableview/step14.png" alt="Is initial view controller" /></p>
+
+<p><br/></p>
 
 <h2 id="step-3-update-viewcontroller-swift">Step 3: Update <code>ViewController.swift</code></h2>
 
@@ -91,25 +103,35 @@ Custom cells for static table view are done in the exact same way as custom cell
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewController</span>: UITableViewController</code></pre></td></tr></table>
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">// Change to be a subclass of UITableViewController</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ViewController</span>: UITableViewController</code></pre></td></tr></table>
 </div>
 </div>
 
 <p>We also need to change the class in <code>Interface builder</code> for the table view controller to be of type <code>ViewController</code>.</p>
 
-<p>![ADD IMAGE]()</p>
+<p><img src="/static-tableview/changeInterfaceToTableviewController.png" alt="Change Interface builder class" /></p>
+
+<p><br/></p>
 
 <h2 id="step-4-make-table-view-static">Step 4: Make table view static</h2>
 
-<p>To do this go <code>Interface builder</code> and click on the <code>Table View</code>.</p>
+<p>To do this go to <code>Interface builder</code> and click on the <code>Table View</code>.</p>
 
 <p><img src="/static-tableview/step3.png" alt="Table view" /></p>
 
-<p>Now you need to set the content type of the table view.</p>
+<p>Now you need to set the content type of the table view to <code>Static Cells</code>.</p>
 
 <p><img src="/static-tableview/step4.png" alt="Table view content type" /></p>
+
+<p>After setting it to static, you can increment the number of rows by clicking on <code>Table View Section</code> in the view hierarchy on the left(highlighted in blue) and then on the right you will see the option to increment the number of rows that the table view has.</p>
+
+<p><img src="/static-tableview/incrementCellCount.png" alt="Table view content type" /></p>
+
+<p><br/></p>
 
 <h2 id="step-5-add-a-new-file-for-the-custom-cell">Step 5: Add a new file for the custom cell</h2>
 
@@ -127,23 +149,29 @@ Custom cells for static table view are done in the exact same way as custom cell
 
 <p><img src="/static-tableview/step9.png" alt="Name file and create nib" /></p>
 
+<p><br/></p>
+
 <h2 id="step-6-style-the-cell">Step 6: Style the cell</h2>
 
 <p>Click on the <code>CustomStaticCellTableViewCell.xib</code>, click on the view and change the height of that view.</p>
 
-<p><img src="/static-tableview/step10.png" alt="Change height of view" /></p>
+<p><img src="/static-tableview/cellHeight.png" alt="Change height of view" /></p>
 
 <p>After we have set the height of the cell, we need to add a view and a label to the cell. It should look similar to the below:</p>
 
-<p>![ADD IMAGE]()</p>
+<p><img src="/static-tableview/cellStyling.png" alt="Change height of view" /></p>
 
 <p>Make sure that once you have added the view and label that you create the outlets for them. We will be using the label outlet later on.</p>
 
+<p><br/></p>
+
 <h2 id="step-7-reuse-identifier">Step 7: <code>Reuse Identifier</code></h2>
 
-<p>Go back to the <code>Main.storyboard</code>. For each cell you will need to change the <code>Reuse Identifier</code>. We will be using this later on, you can find the <code>Reuse Identifier</code> here:</p>
+<p>Go back to the <code>Main.storyboard</code>. For each cell you will need to change the <code>Identifier</code> to <code>CustomCell</code>, this can be anything you want, but for this tutorial I will just be using <code>CustomCell</code>. We will be using this later on, you can find the <code>Identifier</code> here:</p>
 
-<p>![ADD IMAGE]()</p>
+<p><img src="/static-tableview/cellIdentifier.png" alt="Change height of view" /></p>
+
+<p><br/></p>
 
 <h2 id="step-8-code-time">Step 8: Code time</h2>
 
