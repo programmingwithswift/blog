@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141758458-1"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-141758458-1');
+		</script>
+
+		<meta property="og:title" content="Save Images Locally with Swift 5" />
+		<meta property="og:description" content="Depending on what you are building, it could be useful to save images locally. In this tutorial I will show you the basics of how to save an image to UserDefaults as well as to the file system. You will be able to use the same technique to save an image to Core Data, but I will not be showing you how to do that.
+
+Why save images locally?" />
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://programmingwithswift.github.io/posts/save-images-locally-swift-5/" />
+
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="google-site-verification" content="KX0zDrjfabSz3xSDGK29_FFmMguxQty1gdgGOb2YBME" />
+
+		<title>
+				Save Images Locally with Swift 5 &middot; Programming with Swift
+		</title>
+
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Programming with Swift" />
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Programming with Swift</h2>
+				</a>
+				
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-07-06 14:25:59 &#43;0200 SAST">July 6, 2019</time>
+</div>
+		<h1 class="post-title">Save Images Locally with Swift 5</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p><img src="/save-images-locally/feature-image.png" alt="Change height of view" /></p>
+
+<p>Depending on what you are building, it could be useful to save images locally. In this tutorial I will show you the basics of how to save an image to <code>UserDefaults</code> as well as to the <code>file system</code>. You will be able to use the same technique to save an image to <code>Core Data</code>, but I will not be showing you how to do that.</p>
+
+<p></br></p>
+
+<h2 id="why-save-images-locally">Why save images locally?</h2>
+
+<p>There are many reasons for wanting to save images locally on a users device. You might want to save the images so that you do not need to download them again, or, you might be building an app that edits images. These are only a few of the reasons that you may want to save images locally.</p>
+
+<p></br></p>
+
+<h2 id="base-implementation">Base implementation</h2>
+
+<p>Like I mentioned before, we are going to build an app that allows us to save an image locally. We will be using <code>UserDefaults</code> and <code>file system</code> in order to save locally. To get started we will start by writing the foundational code and then later on we will add the implementation code for each method of saving the images.</p>
+
+<p>Lets start by creating the <code>StorageType</code> enum. This enum will have two cases, <code>userDefaults</code> and <code>fileSystem</code>. This will be used in the <code>store</code> and <code>retrieveImage</code> functions that we will be creating later on.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">StorageType</span> {
+    <span style="color:#66d9ef">case</span> userDefaults
+    <span style="color:#66d9ef">case</span> fileSystem
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>Now that we have the storage types we can start creating the foundations of the <code>store</code> and <code>retrieveImage</code> functions.</p>
+
+<p>The <code>store</code> function will take three parameters. <code>image</code>, this will be of type <code>UIImage</code>, <code>key</code>, this will be of type <code>String</code> and will be a unique name for the image we want to save/retrieve, and finally we will pass through the <code>storageType</code>.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">store</span>(image: UIImage, forKey key: String, withStorageType storageType: StorageType) {
+    <span style="color:#75715e">// Implementation</span>
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>We now have our function. We should be able to add some of the base logic to it now. In this function we want to take a <code>UIImage</code> and convert it to <code>pngData</code>. This will make it much easier for use to store the image. We also want to use the correct file storage. Update your <code>store</code> function with the following</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">store</span>(image: UIImage, forKey key: String, withStorageType storageType: StorageType) {
+    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> pngRepresentation = image.pngData() {
+        <span style="color:#66d9ef">switch</span> storageType {
+        <span style="color:#66d9ef">case</span> .fileSystem:
+            <span style="color:#75715e">// Save to disk</span>
+        <span style="color:#66d9ef">case</span> .userDefaults:
+            <span style="color:#75715e">// Save to user defaults</span>
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>We have now created the foundations of our <code>store</code> function. Later on we will implement each of the saving methods, but for now we are going to move on to getting the foundational code written for our <code>retrieve</code> function.</p>
+
+<p>The <code>retrieveImage</code> function is going to take two arguments. The first argument will be, <code>key</code>, which will be the same as the <code>key</code> in the <code>store</code> function. The second argument will be <code>storageType</code>, again, this will be used in the same way as it is used in the <code>store</code> function.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">retrieveImage</span>(forKey key: String, inStorageType storageType: StorageType) {
+    <span style="color:#66d9ef">switch</span> storageType {
+    <span style="color:#66d9ef">case</span> .fileSystem:
+        <span style="color:#75715e">// Retrieve image from disk</span>
+    <span style="color:#66d9ef">case</span> .userDefaults:
+        <span style="color:#75715e">// Retrieve image from user defaults</span>
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>And that is all that is needed for the foundation code. We can now start implementing the <code>UserDefaults</code> save and retrieve functionality.</p>
+
+<p></br></p>
+
+<h2 id="saving-and-retrieving-image-with-userdefaults">Saving and retrieving image with UserDefaults</h2>
+
+<p>The <code>UserDefaults</code> is the easier way to save the images. In our code that we have written so far we have already converted our <code>UIImage</code> to <code>Data</code>. All we need to do now is to save and retrieve it.</p>
+
+<p>Lets do the saving first. To save the data to <code>UserDefaults</code> update your <code>store</code> method to look like the below code.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">store</span>(image: UIImage, forKey key: String, withStorageType storageType: StorageType) {
+    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> pngRepresentation = image.pngData() {
+        <span style="color:#66d9ef">switch</span> storageType {
+        <span style="color:#66d9ef">case</span> .fileSystem:
+            <span style="color:#75715e">// Save to disk</span>
+        <span style="color:#66d9ef">case</span> .userDefaults:
+            UserDefaults.standard.<span style="color:#66d9ef">set</span>(pngRepresentation, forKey: key)
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>That was quite easy, a nice one liner to save the image when using <code>UserDefaults</code>. Ok, now lets implement the <code>retrieveImage</code> functionality for <code>UserDefaults</code>.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">retrieveImage</span>(forKey key: String, inStorageType storageType: StorageType) {
+    <span style="color:#66d9ef">switch</span> storageType {
+    <span style="color:#66d9ef">case</span> .fileSystem:
+        <span style="color:#75715e">// Retrieve image from disk</span>
+    <span style="color:#66d9ef">case</span> .userDefaults:
+        <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> imageData = UserDefaults.standard.object(forKey: key) <span style="color:#66d9ef">as</span>? Data, 
+            <span style="color:#66d9ef">let</span> image = UIImage(data: imageData) {
+            
+            <span style="color:#66d9ef">return</span> image
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>So that was almost as simple as storing the image. Because <code>UserDefaults</code> stores <code>Data</code> as <code>Any</code> type, we need to cast it back to <code>Data</code> when we retrieve it. Once we do that, we instantiate a new <code>UIImage</code> with the <code>imageData</code> and then we return that <code>UIImage</code> that we initialised.</p>
+
+<h2 id="save-and-retrieve-image-with-file-system">Save and retrieve image with File System</h2>
+
+<p>Using the <code>file system</code> is quite a bit more complicated than using <code>UserDefaults</code>. We are going to start off by writing a small helper method called <code>filePath</code>. <code>filePath</code> will only take one argument called <code>key</code>. The <code>key</code> argument is the same <code>key</code> that we use in other places in our code.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">filePath</span>(forKey key: String) -&gt; URL? {
+    <span style="color:#66d9ef">let</span> fileManager = FileManager.<span style="color:#66d9ef">default</span>
+    <span style="color:#66d9ef">guard</span> <span style="color:#66d9ef">let</span> documentURL = fileManager.urls(<span style="color:#66d9ef">for</span>: .documentDirectory,
+                                            <span style="color:#66d9ef">in</span>: FileManager.SearchPathDomainMask.userDomainMask).first <span style="color:#66d9ef">else</span> { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span> }
+    
+    <span style="color:#66d9ef">return</span> documentURL.appendingPathComponent(key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.png&#34;</span>)
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>This file doesn&rsquo;t do too much, but it will help out later on. Basically all this method will do is get the url for the home directory on the device. It will then append the <code>key</code>.png to the url and return that value. I have used the png extension in this example as we are only working with png data in this example.</p>
+
+<p>Ok, now that we have our helper function we can implement the <code>.fileSystem</code> functionality in the <code>store</code> function. Update your <code>store</code> function to look like the below function.</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">store</span>(image: UIImage,
+                    forKey key: String,
+                    withStorageType storageType: StorageType) {
+    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> pngRepresentation = image.pngData() {
+        <span style="color:#66d9ef">switch</span> storageType {
+        <span style="color:#66d9ef">case</span> .fileSystem:
+            <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> filePath = filePath(forKey: key) {
+                <span style="color:#66d9ef">do</span>  {
+                    <span style="color:#66d9ef">try</span> pngRepresentation.write(to: filePath,
+                                                options: .atomic)
+                } <span style="color:#66d9ef">catch</span> <span style="color:#66d9ef">let</span> err {
+                    print(<span style="color:#e6db74">&#34;Saving file resulted in error: &#34;</span>, err)
+                }
+            }
+        <span style="color:#66d9ef">case</span> .userDefaults:
+            UserDefaults.standard.<span style="color:#66d9ef">set</span>(pngRepresentation,
+                                        forKey: key)
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>Since the <code>filePath</code> function returns an <code>optional URL</code> we need to unwrap it before we can use it. Once we have unwrapped it we need to write the data to that filePath. Luckily for us <code>Data</code> has a <code>write</code> method which we can use to write the data to a file. This is where we will use the filePath that our helper method has returned. The <code>write</code> method can throw an error so we need to make sure do wrap it in a <code>do catch</code>. You should now be able to write the image data to disk.</p>
+
+<p>This was a little bit more complicated but not too much more complicated, so lets move straight into the <code>retrieveImage</code> function.</p>
+
+<p>Update your <code>retrieveImage</code> function to look like the below:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">retrieveImage</span>(forKey key: String,
+                            inStorageType storageType: StorageType) -&gt; UIImage? {
+    <span style="color:#66d9ef">switch</span> storageType {
+    <span style="color:#66d9ef">case</span> .fileSystem:
+        <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> filePath = <span style="color:#66d9ef">self</span>.filePath(forKey: key),
+            <span style="color:#66d9ef">let</span> fileData = FileManager.<span style="color:#66d9ef">default</span>.contents(atPath: filePath.path),
+            <span style="color:#66d9ef">let</span> image = UIImage(data: fileData) {
+            <span style="color:#66d9ef">return</span> image
+        }
+    <span style="color:#66d9ef">case</span> .userDefaults:
+        <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> imageData = UserDefaults.standard.object(forKey: key) <span style="color:#66d9ef">as</span>? Data,
+            <span style="color:#66d9ef">let</span> image = UIImage(data: imageData) {
+            <span style="color:#66d9ef">return</span> image
+        }
+    }
+    
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>Once again we start off by using our <code>filePath</code> helper method to return the <code>URL</code> to the file that we have stored. Once we have that <code>URL</code> we ask the <code>FileManager</code> to get the contents of that <code>URL</code>. Now that we have the file data we can use that data to instantiate a new <code>UIImage</code>. If none of the above produces a <code>nil</code> value we can return our image that we retrieved from disk.</p>
+
+<p>That is it when it comes to the basics. You should now be able to read and write an image to the <code>file system</code> as well as to <code>UserDefaults</code></p>
+
+<p></br></p>
+
+<h2 id="creating-test-ui">Creating test UI</h2>
+
+<p>Now that we have all the functional stuff done we can test that everything is working as expected. To do this I have updated my <code>Main.storyboard</code> to look like the following:</p>
+
+<p><img src="/save-images-locally/uiStyling.png" alt="Change height of view" /></p>
+
+<p>Once you have done that, created outlets for the two UIImageView&rsquo;s and the two UIButton&rsquo;s. My outlets look like this:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">@IBOutlet</span> <span style="color:#66d9ef">weak</span> <span style="color:#66d9ef">var</span> imageToSaveImageView: UIImageView<span style="color:#f92672">!</span> {
+    <span style="color:#66d9ef">didSet</span> {
+        imageToSaveImageView.image = UIImage(named: <span style="color:#e6db74">&#34;building&#34;</span>)
+    }
+}
+<span style="color:#66d9ef">@IBOutlet</span> <span style="color:#66d9ef">weak</span> <span style="color:#66d9ef">var</span> saveImageButton: UIButton<span style="color:#f92672">!</span> {
+    <span style="color:#66d9ef">didSet</span> {
+        saveImageButton.addTarget(<span style="color:#66d9ef">self</span>,
+                                    action: <span style="color:#66d9ef">#selector</span>(ViewController.save),
+                                    <span style="color:#66d9ef">for</span>: .touchUpInside)
+    }
+}
+<span style="color:#66d9ef">@IBOutlet</span> <span style="color:#66d9ef">weak</span> <span style="color:#66d9ef">var</span> savedImageDisplayImageView: UIImageView<span style="color:#f92672">!</span>
+<span style="color:#66d9ef">@IBOutlet</span> <span style="color:#66d9ef">weak</span> <span style="color:#66d9ef">var</span> displaySaveImageButton: UIButton<span style="color:#f92672">!</span> {
+    <span style="color:#66d9ef">didSet</span> {
+        displaySaveImageButton.addTarget(<span style="color:#66d9ef">self</span>,
+                                            action: <span style="color:#66d9ef">#selector</span>(ViewController.display),
+                                            <span style="color:#66d9ef">for</span>: .touchUpInside)
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>If you add this code you will not be able to build your project. So to fix that problem we need to implement those two functions, <code>save</code> and <code>display</code>. The <code>save</code> function will call the <code>store</code> function that we created earlier and the <code>display</code> function will call the <code>retrieveImage</code> function and then display the image that was returned, either from the <code>fileSystem</code> or from <code>UserDefaults</code>. These two functions look like this:</p>
+
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">@objc</span>
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">save</span>() {
+    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> buildingImage = UIImage(named: <span style="color:#e6db74">&#34;building&#34;</span>) {
+        DispatchQueue.global(qos: .background).async {
+            <span style="color:#66d9ef">self</span>.store(image: buildingImage,
+                        forKey: <span style="color:#e6db74">&#34;buildingImage&#34;</span>,
+                        withStorageType: .fileSystem)
+        }
+    }
+}
+
+<span style="color:#66d9ef">@objc</span>
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">display</span>() {
+    DispatchQueue.global(qos: .background).async {
+        <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> savedImage = <span style="color:#66d9ef">self</span>.retrieveImage(forKey: <span style="color:#e6db74">&#34;buildingImage&#34;</span>,
+                                                inStorageType: .fileSystem) {
+            DispatchQueue.main.async {
+                <span style="color:#66d9ef">self</span>.savedImageDisplayImageView.image = savedImage
+            }
+        }
+    }
+}</code></pre></td></tr></table>
+</div>
+</div>
+
+<p>I have wrapped calling the <code>store</code> and the <code>retrieveImages</code> in <code>DispatchQueue</code>&rsquo;s because if you don&rsquo;t then it will block the main thread.</p>
+
+<p>Awesome, now that everything is hooked up you should be able to build and run the app. You will need to update the <code>save</code> and <code>display</code> method depending on where you want to save an image. Oh, you will also need to change the image name. I used an image called <code>buildingImage</code>, but this will not work for you. To get an image into your project you can drag any image into your <code>Assets.xcassets</code> and then you will need to replace <code>buildingImage</code> with whatever the name of your image is.</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/posts/xcode11-does-not-show-canvas/" class="left arrow">&#8592;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+    </body>
+</html>

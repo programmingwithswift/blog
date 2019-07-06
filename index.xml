@@ -5,10 +5,21 @@
     <link>https://programmingwithswift.github.io/</link>
     <description>Recent content on Programming with Swift</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 06 Jun 2019 19:29:50 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jul 2019 14:25:59 +0200</lastBuildDate>
     
 	<atom:link href="https://programmingwithswift.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Save Images Locally with Swift 5</title>
+      <link>https://programmingwithswift.github.io/posts/save-images-locally-swift-5/</link>
+      <pubDate>Sat, 06 Jul 2019 14:25:59 +0200</pubDate>
+      
+      <guid>https://programmingwithswift.github.io/posts/save-images-locally-swift-5/</guid>
+      <description>Depending on what you are building, it could be useful to save images locally. In this tutorial I will show you the basics of how to save an image to UserDefaults as well as to the file system. You will be able to use the same technique to save an image to Core Data, but I will not be showing you how to do that.
+
+Why save images locally?</description>
+    </item>
     
     <item>
       <title>Xcode 11 Does Not Show Canvas</title>
