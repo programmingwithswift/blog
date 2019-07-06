@@ -53,10 +53,7 @@ Why save images locally?" />
 <main>
 	<div class="post">
 		<div class="post-info">
-    <span>Written by</span>
-        
-        <br>
-        <span>on&nbsp;</span><time datetime="2019-07-06 14:25:59 &#43;0200 SAST">July 6, 2019</time>
+        <span>Written on&nbsp;</span><time datetime="2019-07-06 14:25:59 &#43;0200 SAST">July 6, 2019</time>
 </div>
 		<h1 class="post-title">Save Images Locally with Swift 5</h1>
 <div class="post-line"></div>
@@ -115,7 +112,7 @@ Why save images locally?" />
 </div>
 </div>
 
-<p>We now have our function. We should be able to add some of the base logic to it now. In this function we want to take a <code>UIImage</code> and convert it to <code>pngData</code>. This will make it much easier for use to store the image. We also want to use the correct file storage. Update your <code>store</code> function with the following</p>
+<p>We now have our function. We should be able to add some of the base logic to it now. In this function we want to take a <code>UIImage</code> and convert it to <code>Data</code>. This will make it much easier for use to store the image. We also want to use the correct file storage. Update your <code>store</code> function with the following</p>
 
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -268,7 +265,7 @@ Why save images locally?" />
 </div>
 </div>
 
-<p>This file doesn&rsquo;t do too much, but it will help out later on. Basically all this method will do is get the url for the home directory on the device. It will then append the <code>key</code>.png to the url and return that value. I have used the png extension in this example as we are only working with png data in this example.</p>
+<p>This <code>filePath</code> method doesn&rsquo;t do too much, but it will help out later on. Basically all this method will do is get the url for the home directory on the device. It will then append the <code>key</code>.png to the url and return that value. I have used the png extension in this example as we are only working with png data in this example.</p>
 
 <p>Ok, now that we have our helper function we can implement the <code>.fileSystem</code> functionality in the <code>store</code> function. Update your <code>store</code> function to look like the below function.</p>
 
