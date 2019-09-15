@@ -16,6 +16,7 @@
 		<meta property="og:description" content="" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="https://programmingwithswift.github.io/" />
+		<link href="" rel="canonical" />
 
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,9 +65,7 @@
         <div class="catalogue-line"></div>
 
         <p>
-            Depending on what you are building, it could be useful to save images locally. In this tutorial I will show you the basics of how to save an image to UserDefaults as well as to the file system. You will be able to use the same technique to save an image to Core Data, but I will not be showing you how to do that.
-
-Why save images locally?
+            This page has moved to programmingwithswift.com Depending on what you are building, it could be useful to save images locally. In this tutorial I will show you the basics of how to save an image to UserDefaults as well as to the file system. You will be able to use the same technique to save an image to Core Data, but I will not be showing you how to do that.
         </p>
     </div>
 </a>
@@ -80,7 +79,7 @@ Why save images locally?
         <div class="catalogue-line"></div>
 
         <p>
-            This is a simple but annoying fix. In order for you to use canvas with Xcode 11 you will need upgrade your operation system on your Mac. It needs to be running macOS Catalina/macOS 10.15.
+            This page has moved to programmingwithswift.com This is a simple but annoying fix. In order for you to use canvas with Xcode 11 you will need upgrade your operation system on your Mac. It needs to be running macOS Catalina/macOS 10.15.
         </p>
     </div>
 </a>
@@ -94,8 +93,8 @@ Why save images locally?
         <div class="catalogue-line"></div>
 
         <p>
-            Today I will show you how to create custom table view cells and use it in a static table view. A static table view can be useful when creating menu&rsquo;s that do not change or app settings. Pretty much anything that can be listed that will have fixed values.
-Custom cells for static table view are done in the exact same way as custom cells for dynamic table views. One needs to register the nib and then use the cellForRowAt method to use the custom cell.
+            This page has moved to programmingwithswift.com Today I will show you how to create custom table view cells and use it in a static table view. A static table view can be useful when creating menu&rsquo;s that do not change or app settings. Pretty much anything that can be listed that will have fixed values.
+Custom cells for static table view are done in the exact same way as custom cells for dynamic table views.
         </p>
     </div>
 </a>
@@ -109,7 +108,7 @@ Custom cells for static table view are done in the exact same way as custom cell
         <div class="catalogue-line"></div>
 
         <p>
-            This is can be a frustrating issue. One of the fixes for this is to restart Xcode. There can also be another solution and that is to change the device that you have chosen for deployment.
+            This page has moved to programmingwithswift.com This is can be a frustrating issue. One of the fixes for this is to restart Xcode. There can also be another solution and that is to change the device that you have chosen for deployment.
 This issue can also occur if you are trying to run the app on an iPhone but you have set your Device under Deployment info to iPad, or vice versa.
         </p>
     </div>
@@ -124,9 +123,8 @@ This issue can also occur if you are trying to run the app on an iPhone but you 
         <div class="catalogue-line"></div>
 
         <p>
-            What is a completion handler A completion handler is basically just a function that gets passed as a parameter of another function.
+            This page has moved to programmingwithswift.com What is a completion handler A completion handler is basically just a function that gets passed as a parameter of another function.
 The reason that we would want to do this is because we want to be notified when something is complete. Generally we use functions that return a value, but this is only useful when we are doing synchronous work. For asynchronous work we use completion handlers.
-A good example of this is when we do a network request.
         </p>
     </div>
 </a>
@@ -140,7 +138,7 @@ A good example of this is when we do a network request.
         <div class="catalogue-line"></div>
 
         <p>
-            Today I will show you how to create a singleton with Swift. Singletons are a very touchy subject when it comes to programming. Personally I do not have an issue with them as long as it is used appropriately.
+            This page has moved to programmingwithswift.com Today I will show you how to create a singleton with Swift. Singletons are a very touchy subject when it comes to programming. Personally I do not have an issue with them as long as it is used appropriately.
 Why use a Singleton The use case for a singleton is relatively small. The very few places where singletons can be used is when they are immutable or when they are one way.
         </p>
     </div>
@@ -155,7 +153,7 @@ Why use a Singleton The use case for a singleton is relatively small. The very f
         <div class="catalogue-line"></div>
 
         <p>
-            Today I will show you how to fix Type does not conform to protocol 'Decodable'. The fix is not difficult but it can be annoying that one needs to write wrappers for the types that do not conform.
+            This page has moved to programmingwithswift.com Today I will show you how to fix Type does not conform to protocol 'Decodable'. The fix is not difficult but it can be annoying that one needs to write wrappers for the types that do not conform.
 Lets get started. The below code is my broken example.
 1 2 3 4 5 6  struct User: Codable { let name: String let email: String let profilePicture: UIImage let location: CLLocationCoordinate2D }   The problem with the above code is that both UIImage and CLLocationCoordinate2D do not conform to Decodable.
         </p>
@@ -171,10 +169,9 @@ Lets get started. The below code is my broken example.
         <div class="catalogue-line"></div>
 
         <p>
-            I have recently been going through warnings on a project I am working on. One of the warnings was 'Hashable.hashValue' is deprecated as a protocol requirement; conform type to 'Hashable' by implementing 'hash(into:)' instead.
+            This page has moved to programmingwithswift.com I have recently been going through warnings on a project I am working on. One of the warnings was 'Hashable.hashValue' is deprecated as a protocol requirement; conform type to 'Hashable' by implementing 'hash(into:)' instead.
 This confused me a bit so I decided to carry on with the other warnings. It turns out this is a really simple fix.
 Here is an example of the issue:
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16  enum ImageSize: Hashable { case small case medium case large public var hashValue: Int { switch self { case .
         </p>
     </div>
 </a>
@@ -188,7 +185,7 @@ Here is an example of the issue:
         <div class="catalogue-line"></div>
 
         <p>
-            In this tutorial I will show you how to setup Charles with your iPhone. Charles is an extremely useful tool. I have used it often to debug my network calls, or to change the value that the server has returned to ensure that my app is behaving correctly.
+            This page has moved to programmingwithswift.com In this tutorial I will show you how to setup Charles with your iPhone. Charles is an extremely useful tool. I have used it often to debug my network calls, or to change the value that the server has returned to ensure that my app is behaving correctly.
 Step 1: Get the proxy details The first thing that you need to do once you have Charles open is to navigate to:
         </p>
     </div>
@@ -203,10 +200,10 @@ Step 1: Get the proxy details The first thing that you need to do once you have 
         <div class="catalogue-line"></div>
 
         <p>
-            Notifications can be daunting, in this post I hope to make it simple by showing you how to send local notification as well as how to handle the user tapping that notification.
+            This page has moved to programmingwithswift.com Notifications can be daunting, in this post I hope to make it simple by showing you how to send local notification as well as how to handle the user tapping that notification.
 
 Foundational information Local notifications have three main parts. The content, trigger and request. These three parts will allow you to create a local notification.
-Content The content of a notification is straight forward. It is what you are going to show the user.
+Content The content of a notification is straight forward.
         </p>
     </div>
 </a>
